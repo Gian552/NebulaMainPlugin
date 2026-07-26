@@ -8,7 +8,6 @@ using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
 using NebMainPlugin;
 using NebMainPluginLabApi;
-using NebMainPluginLabApi.Systems.Events.ADHSL;
 
 namespace NebMainPluginLabApi
 {
@@ -57,7 +56,7 @@ namespace NebMainPluginLabApi
 //            SpawnProtection.Enable();
 
             Logger.Info("Enabling ADHSL...");
-            adhsl.Enable();
+//            adhsl.Enable();
 
             Logger.Info("Enabling TeamTimereport...");
 //            WeeklyPlaytime.Enable();
@@ -97,7 +96,7 @@ namespace NebMainPluginLabApi
             EventHandlers.Disable();
 
             Logger.Info("Disabling ADHSL...");
-            adhsl.Disable();
+//            adhsl.Disable();
 
             Logger.Info("Disabling TeamTimereport...");
 //            WeeklyPlaytime.Disable();

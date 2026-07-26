@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LabApi.Features.Console;
-using static NebMainPlugin.API.Enums.Roles;
+using static NebMainPluginLabApi.API.Enums.Roles;
 
-namespace NebMainPlugin.API.Enums
+namespace NebMainPluginLabApi.API.Enums
 {
     /// <summary>
     /// Strongly-typed role metadata and permission registry.
     /// Follows rule: internal identifiers = DiscordRoles enum names,
-    /// displayed badge = <see cref="DiscordRoles.ToRoleString()"/>.
+    /// displayed badge = <see cref="Roles.DiscordRoles.ToRoleString()"/>.
     /// Roles not present in DiscordRoles are skipped.
     /// </summary>
     public static class PermissionRegistry
@@ -17,7 +17,7 @@ namespace NebMainPlugin.API.Enums
         /// <summary>Role metadata container.</summary>
         public class RoleInfo
         {
-            public DiscordRoles RoleEnum { get; init; }
+            public Roles.DiscordRoles RoleEnum { get; init; }
             public string InternalName => RoleEnum.ToString();    // e.g. "jr_supporter"
             public string DisplayName => DiscordRoleExtensions.FormatTeamRole(RoleEnum.ToString().ToLowerInvariant()); // uses ToRoleString()
             public ulong DiscordId => (ulong)RoleEnum;           // the numeric ID from enum
@@ -31,67 +31,67 @@ namespace NebMainPlugin.API.Enums
         }
 
         /// <summary>All validated roles.</summary>
-        public static readonly IReadOnlyDictionary<DiscordRoles, RoleInfo> Roles;
+        public static readonly IReadOnlyDictionary<Roles.DiscordRoles, RoleInfo> Roles;
 
         /// <summary>Permission → allowed roles mapping.</summary>
-        public static readonly IReadOnlyDictionary<PlayerPermissions, DiscordRoles[]> PermissionRoles;
+        public static readonly IReadOnlyDictionary<PlayerPermissions, Roles.DiscordRoles[]> PermissionRoles;
 
         static PermissionRegistry()
         {
-            TryAddRole(DiscordRoles.admin, "red", true, false, 254, 255);
-            TryAddRole(DiscordRoles.ek, "magenta", true, false, 254, 255);
-            TryAddRole(DiscordRoles.jr_ek, "magenta", true, false, 253, 254);
-            TryAddRole(DiscordRoles.jr_admin, "red", true, false, 252, 253);
+            TryAddRole(Enums.Roles.DiscordRoles.admin, "red", true, false, 254, 255);
+            TryAddRole(Enums.Roles.DiscordRoles.ek, "magenta", true, false, 254, 255);
+            TryAddRole(Enums.Roles.DiscordRoles.jr_ek, "magenta", true, false, 253, 254);
+            TryAddRole(Enums.Roles.DiscordRoles.jr_admin, "red", true, false, 252, 253);
 
-            TryAddRole(DiscordRoles.jr_devleitung, "mint", true, false, 6, 7);   // jr_dev_leitung -> jr_devleitung
-            TryAddRole(DiscordRoles.devleitung, "mint", true, false, 7, 8);
-            TryAddRole(DiscordRoles.teamleitung, "cyan", true, false, 6, 7);
-            TryAddRole(DiscordRoles.jr_teamleitung, "cyan", true, false, 6, 7);
+            TryAddRole(Enums.Roles.DiscordRoles.jr_devleitung, "mint", true, false, 6, 7);   // jr_dev_leitung -> jr_devleitung
+            TryAddRole(Enums.Roles.DiscordRoles.devleitung, "mint", true, false, 7, 8);
+            TryAddRole(Enums.Roles.DiscordRoles.teamleitung, "cyan", true, false, 6, 7);
+            TryAddRole(Enums.Roles.DiscordRoles.jr_teamleitung, "cyan", true, false, 6, 7);
 
-            TryAddRole(DiscordRoles.moderator, "aqua", true, false, 5, 6);
-            TryAddRole(DiscordRoles.jr_mod, "aqua", true, false, 5, 6);   // jr_moderator -> jr_mod
+            TryAddRole(Enums.Roles.DiscordRoles.moderator, "aqua", true, false, 5, 6);
+            TryAddRole(Enums.Roles.DiscordRoles.jr_mod, "aqua", true, false, 5, 6);   // jr_moderator -> jr_mod
 
-            TryAddRole(DiscordRoles.supporter, "blue_green", true, false, 2, 3);
-            TryAddRole(DiscordRoles.jr_supporter, "blue_green", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.supporter, "blue_green", true, false, 2, 3);
+            TryAddRole(Enums.Roles.DiscordRoles.jr_supporter, "blue_green", true, false, 0, 0);
 
             // Playtime / Ranks
-            TryAddRole(DiscordRoles.keter, "tomato", true, false, 0, 0);
-            TryAddRole(DiscordRoles.euclid, "yellow", true, false, 0, 0);
-            TryAddRole(DiscordRoles.safe, "light_green", true, false, 0, 0);
-            TryAddRole(DiscordRoles.pending, "mint", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.keter, "tomato", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.euclid, "yellow", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.safe, "light_green", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.pending, "mint", true, false, 0, 0);
 
             // Cosmetic / rewards 
-            TryAddRole(DiscordRoles.femboy, "magenta", true, false, 0, 0);
-            TryAddRole(DiscordRoles.furry, "cyan", true, false, 0, 0);
-            TryAddRole(DiscordRoles.lgbtq, "pink", true, false, 0, 0); // lgbtqia+ -> lgbtq
-            TryAddRole(DiscordRoles.femboy_furry,"magenta",true,false,0,0);
+            TryAddRole(Enums.Roles.DiscordRoles.femboy, "magenta", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.furry, "cyan", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.lgbtq, "pink", true, false, 0, 0); // lgbtqia+ -> lgbtq
+            TryAddRole(Enums.Roles.DiscordRoles.femboy_furry,"magenta",true,false,0,0);
 
             // MTF / rewards 
-            TryAddRole(DiscordRoles.xi_8, "magenta", true, false, 0, 0);
-            TryAddRole(DiscordRoles.omega_1, "magenta", true, false, 0, 0);
-            TryAddRole(DiscordRoles.alpha_1, "red", true, false, 0, 0);
-            TryAddRole(DiscordRoles.nu_7, "deep_pink", true, false, 0, 0);
-            TryAddRole(DiscordRoles.mu_4, "blue_green", true, false, 0, 0);
-            TryAddRole(DiscordRoles.tau_5, "pink", true, false, 0, 0);
-            TryAddRole(DiscordRoles.epsilon_11, "cyan", true, false, 0, 0);
-            TryAddRole(DiscordRoles.beta_1, "aqua", true, false, 0, 0);
-            TryAddRole(DiscordRoles.beta_7, "green", true, false, 0, 0);
-            TryAddRole(DiscordRoles.zeta_9, "green", true, false, 0, 0);
-            TryAddRole(DiscordRoles.eta_10, "pink", true, false, 0, 0);
-            TryAddRole(DiscordRoles.resh_1,"carmine",true,false,0,0);
+            TryAddRole(Enums.Roles.DiscordRoles.xi_8, "magenta", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.omega_1, "magenta", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.alpha_1, "red", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.nu_7, "deep_pink", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.mu_4, "blue_green", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.tau_5, "pink", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.epsilon_11, "cyan", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.beta_1, "aqua", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.beta_7, "green", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.zeta_9, "green", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.eta_10, "pink", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.resh_1,"carmine",true,false,0,0);
 
             // Additional rewards / ranks
-            TryAddRole(DiscordRoles.mu_3, "magenta", true, false, 0, 0);
-            TryAddRole(DiscordRoles.epsilon_6, "cyan", true, false, 0, 0);
-            TryAddRole(DiscordRoles.psi_7, "pumpkin", true, false, 0, 0);
-            TryAddRole(DiscordRoles.tau_5, "pink", true, false, 0, 0);
-            TryAddRole(DiscordRoles.iota_10, "cyan", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.mu_3, "magenta", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.epsilon_6, "cyan", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.psi_7, "pumpkin", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.tau_5, "pink", true, false, 0, 0);
+            TryAddRole(Enums.Roles.DiscordRoles.iota_10, "cyan", true, false, 0, 0);
 
             // Finalize readonly dictionary
-            Roles = new Dictionary<DiscordRoles, RoleInfo>(_mutableRoles);
+            Roles = new Dictionary<Roles.DiscordRoles, RoleInfo>(_mutableRoles);
 
             // --- Build permission mapping ---
-            var perms = new Dictionary<PlayerPermissions, DiscordRoles[]>
+            var perms = new Dictionary<PlayerPermissions, Roles.DiscordRoles[]>
             {
                 [PlayerPermissions.Vanish] = MapNames("admin", "admin_cc", "EK", "jr_admin", "jr_ek", "devleitung", "teamleitung","supporter", "jr_mod", "moderator"),
                 [PlayerPermissions.ExecuteAs] = MapNames("admin_acc", "admin", "EK", "devleitung", "teamleitung", "jr_admin", "jr_ek"),
@@ -136,12 +136,12 @@ namespace NebMainPlugin.API.Enums
         /// Helper that adds a RoleInfo to the roles dictionary only if the DiscordRoles value exists.
         /// (We assume the caller passes a DiscordRoles member that actually exists.)
         /// </summary>
-        private static void TryAddRole(DiscordRoles roleEnum, string color, bool cover, bool hidden, byte kickPower, byte requiredKickPower)
+        private static void TryAddRole(Roles.DiscordRoles roleEnum, string color, bool cover, bool hidden, byte kickPower, byte requiredKickPower)
         {
             // If Roles already contains the key, skip (prevents duplicates)
             if (RolesInternalContains(roleEnum)) return;
 
-            _rolesInternal ??= new Dictionary<DiscordRoles, RoleInfo>();
+            _rolesInternal ??= new Dictionary<Roles.DiscordRoles, RoleInfo>();
 
             _rolesInternal[roleEnum] = new RoleInfo
             {
@@ -155,7 +155,7 @@ namespace NebMainPlugin.API.Enums
         }
 
         // Backing store used during static initialization
-        private static Dictionary<DiscordRoles, RoleInfo> _rolesInternal
+        private static Dictionary<Roles.DiscordRoles, RoleInfo> _rolesInternal
         {
             get
             {
@@ -164,10 +164,10 @@ namespace NebMainPlugin.API.Enums
             }
             set { _mutableRoles = value; }
         }
-        private static Dictionary<DiscordRoles, RoleInfo> _mutableRoles = new();
+        private static Dictionary<Roles.DiscordRoles, RoleInfo> _mutableRoles = new();
 
         // used by TryAddRole to check if a role was already added.
-        private static bool RolesInternalContains(DiscordRoles role) => _mutableRoles.ContainsKey(role);
+        private static bool RolesInternalContains(Roles.DiscordRoles role) => _mutableRoles.ContainsKey(role);
 
         // After static initialization Roles gets set to the readonly dictionary above.
         // But we must expose the actual roles: map _mutableRoles -> Roles in static ctor finalization.
@@ -179,18 +179,18 @@ namespace NebMainPlugin.API.Enums
         /// </summary>
         /// <param name="names">role names from SCP config</param>
         /// <returns>Array of DiscordRoles that exist in the enum</returns>
-        private static DiscordRoles[] MapNames(params string[] names)
+        private static Roles.DiscordRoles[] MapNames(params string[] names)
         {
-            var list = new List<DiscordRoles>();
+            var list = new List<Roles.DiscordRoles>();
 
             if (names == null || names.Length == 0)
-                return Array.Empty<DiscordRoles>();
+                return Array.Empty<Roles.DiscordRoles>();
 
             foreach (var n in names)
             {
                 var normalized = NormalizeToEnumName(n);
 
-                if (Enum.TryParse<DiscordRoles>(normalized, true, out var role))
+                if (Enum.TryParse<Roles.DiscordRoles>(normalized, true, out var role))
                 {
                     // Only add if this role is part of the validated Roles dictionary
                     if (_mutableRoles.ContainsKey(role))
@@ -254,7 +254,7 @@ namespace NebMainPlugin.API.Enums
         /// Accepts an IEnumerable of DiscordRoles (e.g. roles assigned to the player).
         /// Returns true if the user's roles intersect with the permission's allowed roles.
         /// </summary>
-        public static bool HasPermission(this IEnumerable<DiscordRoles> userRoles, PlayerPermissions permission)
+        public static bool HasPermission(this IEnumerable<Roles.DiscordRoles> userRoles, PlayerPermissions permission)
         {
             if (userRoles == null) return false;
             if (!PermissionRoles.TryGetValue(permission, out var allowed)) return false;
@@ -264,7 +264,7 @@ namespace NebMainPlugin.API.Enums
         /// <summary>
         /// Check whether a single DiscordRoles value grants the permission.
         /// </summary>
-        public static bool HasPermission(this DiscordRoles role, PlayerPermissions permission)
+        public static bool HasPermission(this Roles.DiscordRoles role, PlayerPermissions permission)
         {
             if (!PermissionRoles.TryGetValue(permission, out var allowed)) return false;
             return allowed.Contains(role);
@@ -273,7 +273,7 @@ namespace NebMainPlugin.API.Enums
         /// <summary>
         /// Try to get RoleInfo for a DiscordRoles value.
         /// </summary>
-        public static bool TryGetRoleInfo(DiscordRoles role, out RoleInfo info)
+        public static bool TryGetRoleInfo(Roles.DiscordRoles role, out RoleInfo info)
         {
             RoleInfo tinfo = null;
 
@@ -313,14 +313,14 @@ namespace NebMainPlugin.API.Enums
         /// <param name="role">The Discord role for which to retrieve the associated permissions.</param>
         /// <returns>A bitmask representing the permissions associated with the specified role. Each bit in the mask corresponds
         /// to a specific permission, where a set bit indicates that the role has that permission.</returns>
-        public static ulong GetPermissionsForRole(this DiscordRoles role)
+        public static ulong GetPermissionsForRole(this Roles.DiscordRoles role)
         {
             ulong mask = 0;
 
             foreach (var kvp in PermissionRoles)
             {
                 PlayerPermissions perm = kvp.Key;
-                DiscordRoles[] roles = kvp.Value;
+                Roles.DiscordRoles[] roles = kvp.Value;
 
                 // If this role is allowed for that permission
                 if (roles.Contains(role))

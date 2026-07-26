@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace NebMainPlugin
+namespace NebMainPluginLabApi
 {
     public class Config
     {

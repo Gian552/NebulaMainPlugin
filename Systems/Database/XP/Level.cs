@@ -1,6 +1,6 @@
 using System;
 
-namespace NebMainPlugin.Systems.Database
+namespace NebMainPluginLabApi.Systems.Database
 {
     public class Levels
     {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static NebMainPlugin.API.Enums.Roles;
+using static NebMainPluginLabApi.API.Enums.Roles;
 
-namespace NebMainPlugin.API.Enums
+namespace NebMainPluginLabApi.API.Enums
 {
     public static class Roles
     {
@@ -123,7 +123,7 @@ namespace NebMainPlugin.API.Enums
 
     public static class DiscordRoleExtensions
     {
-        public static string ToRoleString(this DiscordRoles role)
+        public static string ToRoleString(this Roles.DiscordRoles role)
         {
             // Get the [Description] category (e.g., "Team", "Rewards", "Cosmetic")
             var category = role.GetType()

@@ -1,10 +1,11 @@
 using LabApi.Features.Wrappers;
 using NebMainPluginLabApi;
+using NebMainPluginLabApi.Systems.Database;
 
-namespace NebMainPlugin.Commands
+namespace NebMainPluginLabApi.Commands
 {
     using CommandSystem;
-    using NebMainPlugin.Systems.Database;
+    using NebMainPluginLabApi.Systems.Database;
     using System;
 
     [CommandHandler(typeof(ClientCommandHandler))]

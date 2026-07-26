@@ -4,8 +4,8 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using LabApi.Features.Wrappers;
-using NebMainPlugin.API;
 using NebMainPluginLabApi;
+using NebMainPluginLabApi.API;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl.NetworkMessages;
 using PlayerRoles.PlayableScps.Scp079;
@@ -16,7 +16,7 @@ using RueI.API.Elements;
 using RueI.API.Elements.Enums;
 using Player = LabApi.Features.Wrappers.Player;
 using Server = LabApi.Features.Wrappers.Server;
-namespace NebMainPlugin.Systems.CustomHints{
+namespace NebMainPluginLabApi.Systems.CustomHints{
 
     public static class Hints
     {

@@ -7,7 +7,7 @@ using LabApi.Features.Extensions;
 using LabApi.Features.Wrappers;
 using NebMainPluginLabApi;
 
-namespace NebMainPlugin.Commands.SCPSwap
+namespace NebMainPluginLabApi.Commands.SCPSwap
 {
     [CommandHandler(typeof(ClientCommandHandler))]
     public class SCPSwap : ParentCommand

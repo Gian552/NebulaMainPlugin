@@ -2,10 +2,10 @@ using CommandSystem;
 using System;
 using PlayerRoles;
 using System.Collections.Generic;
-using NebMainPlugin.Systems.Discord;
+using NebMainPluginLabApi.Systems.Discord;
 
 
-namespace NebMainPlugin.Commands
+namespace NebMainPluginLabApi.Commands
 {
     [CommandHandler(typeof(GameConsoleCommandHandler))]
     public class TPTpost : ParentCommand

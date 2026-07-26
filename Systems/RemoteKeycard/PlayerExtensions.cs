@@ -3,7 +3,7 @@ using System.Linq;
 using Interactables.Interobjects.DoorUtils;
 using LabApi.Features.Wrappers;
 
-namespace NebMainPlugin.Systems.RemoteKeycard
+namespace NebMainPluginLabApi.Systems.RemoteKeycard
 {
     public static class Extensions
     {

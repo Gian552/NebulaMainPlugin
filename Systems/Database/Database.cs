@@ -11,11 +11,11 @@ using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
-using NebMainPlugin.API;
-using NebMainPlugin.API.Enums;
 using NebMainPluginLabApi;
+using NebMainPluginLabApi.API;
+using NebMainPluginLabApi.API.Enums;
 
-namespace NebMainPlugin.Systems.Database
+namespace NebMainPluginLabApi.Systems.Database
 {
     public static class PlayerDataCache
     {

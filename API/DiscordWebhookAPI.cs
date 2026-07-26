@@ -10,7 +10,7 @@ using NebMainPluginLabApi;
 
 #nullable enable
 
-namespace NebMainPlugin.API
+namespace NebMainPluginLabApi.API
 {
     public static class DiscordWebhookAPI
     {

@@ -5,7 +5,7 @@ using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using ICommand = CommandSystem.ICommand;
 
-namespace NebMainPlugin.Commands
+namespace NebMainPluginLabApi.Commands
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
 

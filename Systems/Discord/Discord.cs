@@ -8,12 +8,13 @@ using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
+using NebMainPluginLabApi.API;
 using PlayerStatsSystem;
 using YamlDotNet.Core.Tokens;
-using DCWB = NebMainPlugin.API.DiscordWebhookAPI;
+using DCWB = NebMainPluginLabApi.API.DiscordWebhookAPI;
 
 
-namespace NebMainPlugin.Systems.Discord
+namespace NebMainPluginLabApi.Systems.Discord
 {
     public static class Loggs
     {
@@ -32,7 +33,7 @@ namespace NebMainPlugin.Systems.Discord
 
             _cts = new CancellationTokenSource();
             _ = Task.Run(() => StartLogSendingLoop(_cts.Token));
-            _ = DCWB.SendMs("!!! Server Startup !!!");
+            _ = DiscordWebhookAPI.SendMs("!!! Server Startup !!!");
         }
 
         public static void Disable()
@@ -69,7 +70,7 @@ namespace NebMainPlugin.Systems.Discord
                     {
                         string tmp = msg;
                         msg = "";
-                        await DCWB.SendMs(tmp);
+                        await DiscordWebhookAPI.SendMs(tmp);
                     }
                     else
                     {

@@ -3,10 +3,9 @@ using System.Linq;
 using LabApi.Features.Wrappers;
 using LabApi.Features.Console;
 using LabApi.Features.Extensions;
-using NebMainPluginLabApi;
+using NebMainPluginLabApi.API;
 using PlayerRoles;
 using UserSettings.ServerSpecific;
-using NebMainPluginLabApi.Commands.SCPSwap;
 
 namespace NebMainPluginLabApi.Systems.CustomSettings
 {

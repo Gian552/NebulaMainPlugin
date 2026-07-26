@@ -7,7 +7,7 @@ using PlayerRoles;
 using PlayerStatsSystem;
 
 
-namespace NebMainPlugin.Systems.Database
+namespace NebMainPluginLabApi.Systems.Database
 {
     public class XP
     {

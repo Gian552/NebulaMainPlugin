@@ -7,7 +7,7 @@ using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using NebMainPluginLabApi;
 
-namespace NebMainPlugin.Systems.RemoteKeycard
+namespace NebMainPluginLabApi.Systems.RemoteKeycard
 {
     public class RemoteKeycards
     {

@@ -1,10 +1,11 @@
 using LabApi.Features.Wrappers;
+using NebMainPluginLabApi.Systems.Database;
 
-namespace NebMainPlugin.Commands
+namespace NebMainPluginLabApi.Commands
 {
     using CommandSystem;
     using System;
-    using NebMainPlugin.Systems.Database;
+    using NebMainPluginLabApi.Systems.Database;
 
     [CommandHandler(typeof(ClientCommandHandler))]
     public class verify : ICommand

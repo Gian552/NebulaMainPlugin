@@ -511,6 +511,7 @@
         <Compile Include="Commands\disableXP.cs" />
         <Compile Include="Commands\level.cs" />
         <Compile Include="Commands\playtime.cs" />
+        <Compile Include="Commands\toggleadhsl.cs" />
         <Compile Include="Commands\TPTpost.cs" />
         <Compile Include="Commands\verify.cs" />
         <Compile Include="Config.cs" />
@@ -518,6 +519,7 @@
         <Compile Include="Main.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Systems\Events\adhsl.cs" />
         <Compile Include="Systems\SpawnProtection\SpawnProtection.cs" />
         <Compile Include="Systems\RemoteKeycard\PlayerExtensions.cs" />
         <Compile Include="Systems\RemoteKeycard\RemoteKeycards.cs" />
@@ -533,13 +535,11 @@
         <Compile Include="Systems\Settings\Handlers.cs" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Commands\" />
       <None Include="packages.config" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <Folder Include="Systems\" />
       <PackageReference Include="Discord.Net.Core" Version="3.18.0" />
       <PackageReference Include="Discord.Net.Rest" Version="3.18.0" />
       <PackageReference Include="Discord.Net.Webhook" Version="3.18.0" />

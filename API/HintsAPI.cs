@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using LabApi.Features.Extensions;
-using NebMainPlugin.API.Enums;
-using NebMainPlugin.Systems.CustomHints;
+using NebMainPluginLabApi.API.Enums;
+using NebMainPluginLabApi.Systems.CustomHints;
 using PlayerRoles;
 using Respawning.Objectives;
 using UnityEngine;
 using Player = LabApi.Features.Wrappers.Player;
 
-namespace NebMainPlugin.API{
+namespace NebMainPluginLabApi.API{
 
     public static class HintsAPI
     {

@@ -6,7 +6,6 @@ using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
-using NebMainPlugin;
 using NebMainPluginLabApi;
 using NebMainPluginLabApi.Systems.SpawnProtection;
 

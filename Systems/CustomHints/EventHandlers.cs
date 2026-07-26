@@ -8,7 +8,7 @@ using PlayerRoles;
 using PlayerStatsSystem;
 using UnityEngine;
 
-namespace NebMainPlugin.Systems.CustomHints{
+namespace NebMainPluginLabApi.Systems.CustomHints{
 
     public class EventHandlers
     {

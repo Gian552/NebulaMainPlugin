@@ -1,4 +1,3 @@
-using NebMainPlugin.Systems.Database;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -7,10 +6,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using LabApi.Features.Console;
-using NebMainPlugin.API;
+using NebMainPluginLabApi.API;
+using NebMainPluginLabApi.API.Enums;
+using NebMainPluginLabApi.Systems.Database;
 using YamlDotNet.Core.Tokens;
 
-namespace NebMainPlugin.Systems.Discord
+namespace NebMainPluginLabApi.Systems.Discord
 {
     internal class WeeklyPlaytime
     {

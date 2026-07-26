@@ -3,7 +3,7 @@
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
             Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{50176D9B-CA73-49CA-895B-8767C4C5DA68}</ProjectGuid>
         <OutputType>Library</OutputType>
@@ -464,8 +464,11 @@
         <Compile Include="Systems\Database\SessionVariables.cs" />
         <Compile Include="Systems\Database\XP\Level.cs" />
         <Compile Include="Systems\Database\XP\XP.cs" />
+        <Compile Include="Systems\Settings\EventHandles.cs" />
+        <Compile Include="Systems\Settings\Handlers.cs" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Commands\" />
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>

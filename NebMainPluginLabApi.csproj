@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+
+        <ProjectGuid>{50176D9B-CA73-49CA-895B-8767C4C5DA68}</ProjectGuid>
+
+        <OutputType>Library</OutputType>
+        <RootNamespace>NebMainPluginLabApi</RootNamespace>
+        <AssemblyName>NebMainPluginLabApi</AssemblyName>
+
+        <!-- Wichtig für Mono MSBuild -->
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworks>net48</TargetFrameworks>
+
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+
+
+    <!-- DLL Referenzen -->
+    <ItemGroup>
+        <Reference Include="libs\*.dll">
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Compile Include="Commands\SCPSwap.cs" />
+        <Compile Include="Config.cs" />
+        <Compile Include="EventHandlers.cs" />
+        <Compile Include="Main.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Folder Include="Systems\" />
+    </ItemGroup>
+
+
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+
+</Project>

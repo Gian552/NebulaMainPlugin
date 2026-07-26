@@ -3,14 +3,13 @@
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
             Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{50176D9B-CA73-49CA-895B-8767C4C5DA68}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>NebMainPluginLabApi</RootNamespace>
         <AssemblyName>NebMainPluginLabApi</AssemblyName>
-        <LangVersion>latest</LangVersion>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <LangVersion>latest</LangVersion>
         <FileAlignment>512</FileAlignment>
@@ -503,6 +502,8 @@
         <Compile Include="EventHandlers.cs" />
         <Compile Include="Main.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Systems\RemoteKeycard\PlayerExtensions.cs" />
+        <Compile Include="Systems\RemoteKeycard\RemoteKeycards.cs" />
         <Compile Include="Systems\CustomHints\EventHandlers.cs" />
         <Compile Include="Systems\CustomHints\Hints.cs" />
         <Compile Include="Systems\Database\Database.cs" />

@@ -6,6 +6,7 @@ using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
+using NebMainPlugin;
 using NebMainPluginLabApi;
 
 namespace NebMainPluginLabApi
@@ -16,6 +17,7 @@ namespace NebMainPluginLabApi
         public override string Name => "Nebula Main Plugin";
         public override Version Version => new Version(1, 0, 1, 1);
         public override Version RequiredApiVersion => new Version(9, 12, 6);
+        public override string Description => "Dies ist das Nebula Main Plugin";
 
         internal static Config Instance;
 

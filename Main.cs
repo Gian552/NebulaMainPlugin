@@ -8,6 +8,7 @@ using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
 using NebMainPlugin;
 using NebMainPluginLabApi;
+using NebMainPluginLabApi.Systems.SpawnProtection;
 
 namespace NebMainPluginLabApi
 {
@@ -45,29 +46,29 @@ namespace NebMainPluginLabApi
             EventHandlers.Enable();
 
             Logger.Info("Starting Database...");
-            Database.InitDB();
+//            Database.InitDB();
 
             Logger.Info("Enabling Discord Loggers...");
-            Loggergs.Enable();
+//            Logs.Enable();
 
             Logger.Info("Enabling RemoteKeycards...");
-            RemoteKeycards.Enable();
+//            RemoteKeycards.Enable();
 
             Logger.Info("Enabling Spawnprotection...");
             SpawnProtection.Enable();
 
             Logger.Info("Enabling ADHSL...");
-            adhsl.Enable();
+//            adhsl.Enable();
 
             Logger.Info("Enabling TeamTimereport...");
-            WeeklyPlaytime.Enable();
+//            WeeklyPlaytime.Enable();
 
             //Logger.Info("Enabling User Settings...");
             //EventHandles.Enable();
             
             Logger.Info("Enabling Custom Hud");
-            Systems.CustomHints.EventHandlers.Enable();
-            base.OnEnabled();
+//            Systems.CustomHints.EventHandlers.Enable();
+//            base.OnEnabled();
         }
 
         public override void Disable()
@@ -82,30 +83,30 @@ namespace NebMainPluginLabApi
             //EventHandles.Disable();
 
             Logger.Info("Disabling RemoteKeycards...");
-            RemoteKeycards.Disable();
+//            RemoteKeycards.Disable();
 
             Logger.Info("Disabling Spawnprotection...");
             SpawnProtection.Disable();
 
             Logger.Info("Disabling Discord Loggers...");
-            Loggergs.Disable();
+//            Logs.Disable();
 
             Logger.Info("Closing Database...");
-            Database.CloseDB();
+//            Database.CloseDB();
 
             Logger.Info("Disabling Base EventHandlers...");
             EventHandlers.Disable();
 
             Logger.Info("Disabling ADHSL...");
-            adhsl.Disable();
+//            adhsl.Disable();
 
             Logger.Info("Disabling TeamTimereport...");
-            WeeklyPlaytime.Disable();
+//            WeeklyPlaytime.Disable();
             
             Logger.Info("Disabling Custom Hud");
-            Systems.CustomHints.EventHandlers.Disable();
+//            Systems.CustomHints.EventHandlers.Disable();
 
-            base.OnDisabled();
+//            base.OnDisabled();
         }
     }
 }

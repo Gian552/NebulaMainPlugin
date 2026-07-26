@@ -44,7 +44,7 @@ namespace NebMainPluginLabApi
             {
                 try
                 {
-                    Database.UpdatePlayerRank(ev.Sender);
+//                    Database.UpdatePlayerRank(ev.Sender);
                 }
                 catch (Exception ex)
                 {
@@ -55,7 +55,7 @@ namespace NebMainPluginLabApi
 
         private static void OnBanning(PlayerBanningEventArgs ev)
         {
-            Database.AddBan(ev.Player, ev.Issuer, ev.Reason, ev.Duration);
+//            Database.AddBan(ev.Player, ev.Issuer, ev.Reason, ev.Duration);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace NebMainPlugin
         public string TeamTimeControllWebhook { get; set; }
 
         [Description("Nach wie vielen Sekunden, welche eine Runde läuft, man nicht mehr SCP tauschen kann.")]
-        public int ScpSwapTimeout { get; set; }
+        public int ScpSwapTimeout { get; set; } = 40;
 
         [Description("Ab wie vielen Spielern man zu SCP-3114 (skellet) wechseln kann.")]
         public int SkelliCount { get; set; }

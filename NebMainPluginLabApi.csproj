@@ -10,11 +10,17 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>NebMainPluginLabApi</RootNamespace>
         <AssemblyName>NebMainPluginLabApi</AssemblyName>
+
+        <!-- Wichtig für Mono MSBuild -->
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworks>net48</TargetFrameworks>
+
         <LangVersion>latest</LangVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
@@ -24,7 +30,9 @@
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
@@ -33,6 +41,9 @@
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
+
+
+    <!-- DLL Referenzen -->
     <ItemGroup>
         <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>packages\Lib.Harmony.2.2.2\lib\net48\0Harmony.dll</HintPath>
@@ -488,7 +499,10 @@
           <HintPath>libs\zxing.dll</HintPath>
         </Reference>
     </ItemGroup>
+
+
     <ItemGroup>
+        <Compile Include="Commands\SCPSwap.cs" />
         <Compile Include="API\DiscordWebhookAPI.cs" />
         <Compile Include="API\Enums.cs" />
         <Compile Include="API\HintsAPI.cs" />
@@ -501,6 +515,7 @@
         <Compile Include="Config.cs" />
         <Compile Include="EventHandlers.cs" />
         <Compile Include="Main.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="Systems\RemoteKeycard\PlayerExtensions.cs" />
         <Compile Include="Systems\RemoteKeycard\RemoteKeycards.cs" />
@@ -519,7 +534,10 @@
       <Folder Include="Commands\" />
       <None Include="packages.config" />
     </ItemGroup>
+
+
     <ItemGroup>
+        <Folder Include="Systems\" />
       <PackageReference Include="Discord.Net.Core" Version="3.18.0" />
       <PackageReference Include="Discord.Net.Rest" Version="3.18.0" />
       <PackageReference Include="Discord.Net.Webhook" Version="3.18.0" />
@@ -537,6 +555,8 @@
       <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
       <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
+
+
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

@@ -13,11 +13,13 @@ namespace NebMainPluginLabApi
 {
   public class Main : Plugin<Config>
 {
-        public override string Author => "Skorp 1.0 & MisterT13 & Gian";
+    public override string Author => "Skorp 1.0 & MisterT13 & Gian";
         public override string Name => "Nebula Main Plugin";
+
+        public override string Description => "Das offizielle Plugin vom Nebula Development Team";
+
         public override Version Version => new Version(1, 0, 1, 1);
-        public override Version RequiredApiVersion => new Version(9, 12, 6);
-        public override string Description => "Dies ist das Nebula Main Plugin";
+        public override Version RequiredApiVersion => new Version(1, 0, 0);
 
         internal static Config Instance;
 

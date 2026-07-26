@@ -1,0 +1,6 @@
+/home/gian/Schreibtisch/Projekte/SCPSL/NebMainPluginLabApi/scpswap/NebMainPluginLabApi/bin/Debug/NebMainPluginLabApi.dll
+/home/gian/Schreibtisch/Projekte/SCPSL/NebMainPluginLabApi/scpswap/NebMainPluginLabApi/bin/Debug/NebMainPluginLabApi.pdb
+/home/gian/Schreibtisch/Projekte/SCPSL/NebMainPluginLabApi/scpswap/NebMainPluginLabApi/obj/Debug/NebMainPluginLabApi.csproj.AssemblyReference.cache
+/home/gian/Schreibtisch/Projekte/SCPSL/NebMainPluginLabApi/scpswap/NebMainPluginLabApi/obj/Debug/NebMainPluginLabApi.csproj.CoreCompileInputs.cache
+/home/gian/Schreibtisch/Projekte/SCPSL/NebMainPluginLabApi/scpswap/NebMainPluginLabApi/obj/Debug/NebMainPluginLabApi.dll
+/home/gian/Schreibtisch/Projekte/SCPSL/NebMainPluginLabApi/scpswap/NebMainPluginLabApi/obj/Debug/NebMainPluginLabApi.pdb

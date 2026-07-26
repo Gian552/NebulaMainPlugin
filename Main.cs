@@ -6,16 +6,21 @@ using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
+using NebMainPlugin;
 using NebMainPluginLabApi;
+using NebMainPluginLabApi.Systems.SpawnProtection;
 
 namespace NebMainPluginLabApi
 {
   public class Main : Plugin<Config>
 {
-        public override string Author => "Skorp 1.0 & MisterT13 & Gian";
+    public override string Author => "Skorp 1.0 & MisterT13 & Gian";
         public override string Name => "Nebula Main Plugin";
+
+        public override string Description => "Das offizielle Plugin vom Nebula Development Team";
+
         public override Version Version => new Version(1, 0, 1, 1);
-        public override Version RequiredApiVersion => new Version(9, 12, 6);
+        public override Version RequiredApiVersion => new Version(1, 0, 0);
 
         internal static Config Instance;
 
@@ -41,29 +46,29 @@ namespace NebMainPluginLabApi
             EventHandlers.Enable();
 
             Logger.Info("Starting Database...");
-            Database.InitDB();
+//            Database.InitDB();
 
             Logger.Info("Enabling Discord Loggers...");
-            Loggergs.Enable();
+//            Logs.Enable();
 
             Logger.Info("Enabling RemoteKeycards...");
-            RemoteKeycards.Enable();
+//            RemoteKeycards.Enable();
 
             Logger.Info("Enabling Spawnprotection...");
             SpawnProtection.Enable();
 
             Logger.Info("Enabling ADHSL...");
-            adhsl.Enable();
+//            adhsl.Enable();
 
             Logger.Info("Enabling TeamTimereport...");
-            WeeklyPlaytime.Enable();
+//            WeeklyPlaytime.Enable();
 
             //Logger.Info("Enabling User Settings...");
             //EventHandles.Enable();
             
             Logger.Info("Enabling Custom Hud");
-            Systems.CustomHints.EventHandlers.Enable();
-            base.OnEnabled();
+//            Systems.CustomHints.EventHandlers.Enable();
+//            base.OnEnabled();
         }
 
         public override void Disable()
@@ -78,30 +83,30 @@ namespace NebMainPluginLabApi
             //EventHandles.Disable();
 
             Logger.Info("Disabling RemoteKeycards...");
-            RemoteKeycards.Disable();
+//            RemoteKeycards.Disable();
 
             Logger.Info("Disabling Spawnprotection...");
             SpawnProtection.Disable();
 
             Logger.Info("Disabling Discord Loggers...");
-            Loggergs.Disable();
+//            Logs.Disable();
 
             Logger.Info("Closing Database...");
-            Database.CloseDB();
+//            Database.CloseDB();
 
             Logger.Info("Disabling Base EventHandlers...");
             EventHandlers.Disable();
 
             Logger.Info("Disabling ADHSL...");
-            adhsl.Disable();
+//            adhsl.Disable();
 
             Logger.Info("Disabling TeamTimereport...");
-            WeeklyPlaytime.Disable();
+//            WeeklyPlaytime.Disable();
             
             Logger.Info("Disabling Custom Hud");
-            Systems.CustomHints.EventHandlers.Disable();
+//            Systems.CustomHints.EventHandlers.Disable();
 
-            base.OnDisabled();
+//            base.OnDisabled();
         }
     }
 }

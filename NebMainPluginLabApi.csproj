@@ -3,7 +3,7 @@
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
             Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{50176D9B-CA73-49CA-895B-8767C4C5DA68}</ProjectGuid>
         <OutputType>Library</OutputType>
@@ -12,6 +12,7 @@
         <AssemblyName>NebMainPluginLabApi</AssemblyName>
         <LangVersion>latest</LangVersion>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <LangVersion>latest</LangVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,6 +35,9 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Lib.Harmony.2.2.2\lib\net48\0Harmony.dll</HintPath>
+        </Reference>
         <Reference Include="Assembly-CSharp">
           <HintPath>libs\Assembly-CSharp.dll</HintPath>
         </Reference>
@@ -70,8 +74,8 @@
         <Reference Include="Interop">
           <HintPath>libs\Interop.dll</HintPath>
         </Reference>
-        <Reference Include="LabApi">
-          <HintPath>libs\LabApi.dll</HintPath>
+        <Reference Include="LabApi, Version=1.1.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\Northwood.LabAPI.1.1.1\lib\net48\LabApi.dll</HintPath>
         </Reference>
         <Reference Include="libs\*.dll">
             <Private>false</Private>
@@ -102,6 +106,9 @@
         </Reference>
         <Reference Include="Pooling">
           <HintPath>libs\Pooling.dll</HintPath>
+        </Reference>
+        <Reference Include="RueI, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\RueI.3.1.2\lib\net48\RueI.dll</HintPath>
         </Reference>
         <Reference Include="Snake">
           <HintPath>libs\Snake.dll</HintPath>
@@ -475,8 +482,8 @@
         <Reference Include="UnityEngine.XRModule">
           <HintPath>libs\UnityEngine.XRModule.dll</HintPath>
         </Reference>
-        <Reference Include="YamlDotNet">
-          <HintPath>libs\YamlDotNet.dll</HintPath>
+        <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+          <HintPath>packages\YamlDotNet.11.0.1\lib\net45\YamlDotNet.dll</HintPath>
         </Reference>
         <Reference Include="zxing">
           <HintPath>libs\zxing.dll</HintPath>
@@ -484,16 +491,50 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="API\DiscordWebhookAPI.cs" />
+        <Compile Include="API\Enums.cs" />
+        <Compile Include="API\HintsAPI.cs" />
+        <Compile Include="API\SLRoles.cs" />
+        <Compile Include="Commands\disableXP.cs" />
+        <Compile Include="Commands\level.cs" />
+        <Compile Include="Commands\playtime.cs" />
         <Compile Include="Commands\TPTpost.cs" />
+        <Compile Include="Commands\verify.cs" />
         <Compile Include="Config.cs" />
         <Compile Include="EventHandlers.cs" />
         <Compile Include="Main.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Systems\CustomHints\EventHandlers.cs" />
+        <Compile Include="Systems\CustomHints\Hints.cs" />
+        <Compile Include="Systems\Database\Database.cs" />
+        <Compile Include="Systems\Database\SessionVariables.cs" />
+        <Compile Include="Systems\Database\XP\Level.cs" />
+        <Compile Include="Systems\Database\XP\XP.cs" />
         <Compile Include="Systems\Discord\Discord.cs" />
         <Compile Include="Systems\Discord\WeeklyPlaytime.cs" />
+        <Compile Include="Systems\Settings\EventHandles.cs" />
+        <Compile Include="Systems\Settings\Handlers.cs" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Commands\" />
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Discord.Net.Core" Version="3.18.0" />
+      <PackageReference Include="Discord.Net.Rest" Version="3.18.0" />
+      <PackageReference Include="Discord.Net.Webhook" Version="3.18.0" />
+      <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+      <PackageReference Include="MongoDB.Bson" Version="3.6.0" />
+      <PackageReference Include="MongoDB.Driver" Version="3.6.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.Buffers" Version="4.5.1" />
+      <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+      <PackageReference Include="System.Interactive.Async" Version="6.0.1" />
+      <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+      <PackageReference Include="System.Memory" Version="4.5.5" />
+      <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+      <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+      <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,81 @@
+using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
+
+namespace NebMainPlugin.Commands
+{
+    using CommandSystem;
+    using NebMainPlugin.Systems.Database;
+    using System;
+
+    [CommandHandler(typeof(RemoteAdminCommandHandler))]
+    public class DataInfoServer : ICommand
+    {
+        public string Command { get; } = "playtimectl";
+
+        public string[] Aliases { get; } = new string[] { "ptctl" };
+
+        public string Description { get; } = $"See other players' playtime.\\n\" +\r\n            \"No arguments = playtime of every player on the server.\\n\" +\r\n            \"<int> Id of a player on the server = playtime of a certain player currently on the server.\\n\" +\r\n            \"<string> ID or SteamID of a player = playtime of a certain player.";
+
+        public bool SanitizeResponse => true;
+
+        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        {
+
+            if (arguments.Count == 0)
+            {
+                response = $"<color=green>Playtime of players on server: </color>\n";
+                foreach (Player p in Player.List)
+                {
+                    PlayerData info = PlayerDataCache.Get(p.UserId);
+                    if (info == null)
+                        continue;
+
+                    response += $"<color=yellow>{p.Nickname}</color> - {TimeSpan.FromSeconds((double)info.Playtime):hh\\:mm\\:ss}\n";
+                }
+
+                return true;
+            }
+            else if (arguments.Count == 1)
+            {
+                try
+                {
+                    Player p = Player.Get(arguments.At(0));
+                    PlayerData info;
+                    if (p == null)
+                    {
+                        info = Database.GetPlayerInfoAsync(arguments.At(0) + "@steam").GetAwaiter().GetResult();
+
+                        if (info == null)
+                        {
+                            response = $"<color=red>Wrong player ID/SteamID or Player's Data is not stored.</color>";
+                            return false;
+                        }
+
+                        response = String.Format($"<color=green>Playtime of {0}:</color> {1}", arguments.At(0), $"{TimeSpan.FromSeconds((double)info.Playtime):hh\\:mm\\:ss}");
+                        return true;
+
+                    }
+
+                    info = PlayerDataCache.Get(p.UserId);
+                    if (info == null)
+                    {
+                        response = $"<color=red>Player's data is not saved due to them not agreeing to data collection.</color>";
+                        return false;
+                    }
+
+                    response = String.Format($"<color=green>Playtime of {0}:</color> {1}", p.Nickname, $"{TimeSpan.FromSeconds((double)info.Playtime):hh\\:mm\\:ss}");
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    response = "Error in DB querry! Contact Skorp";
+                    Logger.Error($"{e.Message}");
+                    return false;
+                }
+            }
+
+            response = "";
+            return false;
+        }
+    }
+}

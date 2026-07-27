@@ -10,6 +10,7 @@ using MEC;
 using PlayerRoles;
 using System;
 using System.Collections.Generic;
+using NebMainPluginLabApi.API;
 
 namespace NebMainPluginLabApi.Systems.SpawnProtection
 {
@@ -148,7 +149,7 @@ namespace NebMainPluginLabApi.Systems.SpawnProtection
                 // Angreifer hat Spawnschutz → darf trotzdem angreifen
                 if (protections.ContainsKey(attacker.PlayerId) && protections.ContainsKey(target.PlayerId))
                 {
-                    ev.Attacker.SendHint(TargetHasProtectionMessage,
+                    HintsAPI.AddHint(ev.Attacker,TargetHasProtectionMessage,
                         Main.Instance.TargetHasProtectionMessageTime);
                     ev.IsAllowed = false;
                     return;
@@ -164,14 +165,14 @@ namespace NebMainPluginLabApi.Systems.SpawnProtection
                 //SCPs dürfen nicht angreifen
                 if (attacker.Team == Team.SCPs)
                 {
-                    ev.Attacker.SendHint(TargetHasProtectionMessage,
-                        Main.Instance.TargetHasProtectionMessageTime);
+                    HintsAPI.AddHint(ev.Attacker,TargetHasProtectionMessage,
+                            Main.Instance.TargetHasProtectionMessageTime);
                     ev.IsAllowed = false;
                     return;
                 }
 
                 // Das Opfer ist geschützt, aber Angreifer nicht
-                ev.Attacker.SendHint(TargetHasProtectionMessage, Main.Instance.TargetHasProtectionMessageTime);
+                HintsAPI.AddHint(ev.Attacker,TargetHasProtectionMessage, Main.Instance.TargetHasProtectionMessageTime);
                 ev.IsAllowed = false;
             }
             catch (Exception ex)
@@ -184,7 +185,7 @@ namespace NebMainPluginLabApi.Systems.SpawnProtection
             string TargetHasProtectionMessage = Main.Instance.TargetHasProtectionMessage.Replace("{target}", ev.Target.Nickname);
             if (protections.ContainsKey(ev.Target.PlayerId))
             {
-                ev.Player.SendHint(TargetHasProtectionMessage, Main.Instance.TargetHasProtectionMessageTime);
+                HintsAPI.AddHint(ev.Player,TargetHasProtectionMessage, Main.Instance.TargetHasProtectionMessageTime);
                 ev.IsAllowed = false;
             }
         }
@@ -281,11 +282,11 @@ namespace NebMainPluginLabApi.Systems.SpawnProtection
                 string hintMessageTemplate = Main.Instance.ProtectionCountdownMessage.Replace("{time}", remainingTime.ToString("0"));
                 string hintMessageSpectator = Main.Instance.ProtectionCountdownMessageSpectator.Replace("{time}", remainingTime.ToString("0"));
                 hintMessageSpectator = hintMessageSpectator.Replace("{player}", player.Nickname);
-                player.SendHint(hintMessageTemplate, 1f);
+                HintsAPI.AddHint(player,hintMessageTemplate, 1f);
                 var spectator = player.CurrentSpectators;
                 foreach (var spec in spectator)
                 {
-                    spec.SendHint(hintMessageSpectator, 1f);
+                    HintsAPI.AddHint(spec, hintMessageSpectator, 1f);
                 }
                 remainingTime -= 1f;
                 yield return Timing.WaitForSeconds(1f);
@@ -380,17 +381,12 @@ namespace NebMainPluginLabApi.Systems.SpawnProtection
 
                 protections.Remove(player.PlayerId);
             }
-
-
-
-            player.SendHint(
-                Main.Instance.ProtectionDisabledMessage,
-                Main.Instance.ProtectionDisabledMessageDuration
-             );
+            HintsAPI.AddHint(player,Main.Instance.ProtectionDisabledMessage,
+                Main.Instance.ProtectionDisabledMessageDuration);
             var spectators = player.CurrentSpectators;
             foreach (var spectator in spectators)
             {
-                spectator.SendHint(Main.Instance.ProtectionDisabledMessage, Main.Instance.ProtectionDisabledMessageDuration);
+                HintsAPI.AddHint(spectator, Main.Instance.ProtectionDisabledMessage, Main.Instance.ProtectionDisabledMessageDuration);
             }
 
         }

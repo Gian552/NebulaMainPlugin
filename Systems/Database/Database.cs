@@ -643,20 +643,45 @@ namespace NebMainPluginLabApi.Systems.Database
 
             if (role == Roles.DiscordRoles.None)
             {
-                player.ReferenceHub.serverRoles.SetGroup(null, false, true);
+                BadgeConsoleSilencer.Silent(() => player.ReferenceHub.serverRoles.SetGroup(null, false, true));
                 return true;
             }
-
-            // Entspricht einem automatischen hidetag + showtag: erst die alte Gruppe
-            // wegnehmen, damit SCP:SL den Badge sauber neu an den Client schickt.
-            if (wasVisible)
-                player.ReferenceHub.serverRoles.SetGroup(null, false, true);
 
             if (!ApplyDiscordRole(player, data, forceDisplay: wasVisible))
                 return false;
 
+            if (wasVisible)
+                RefreshTag(player);
+
             AnnounceBadge(player, 0.2f);
             return true;
+        }
+
+        /// <summary>
+        /// Fuehrt kurz hintereinander hidetag und showtag aus, damit der Client den
+        /// gewechselten Badge sicher neu zeichnet.
+        /// </summary>
+        private static void RefreshTag(Player player)
+        {
+            string userId = player.UserId;
+
+            Timing.CallDelayed(0.15f, () =>
+            {
+                var roles = Player.List.FirstOrDefault(p => p.UserId == userId)?.ReferenceHub?.serverRoles;
+                if (roles == null)
+                    return;
+
+                BadgeConsoleSilencer.Silent(() => roles.TryHideTag());
+
+                Timing.CallDelayed(0.15f, () =>
+                {
+                    var again = Player.List.FirstOrDefault(p => p.UserId == userId)?.ReferenceHub?.serverRoles;
+                    if (again == null)
+                        return;
+
+                    BadgeConsoleSilencer.Silent(() => again.RefreshLocalTag());
+                });
+            });
         }
 
         private static async void SaveSelectedRoleAsync(PlayerData data)
@@ -799,7 +824,7 @@ namespace NebMainPluginLabApi.Systems.Database
                 };
 
                 Logger.Debug($"Trying to set rank for {data.Nickname} to {group.Name}");
-                player.ReferenceHub.serverRoles.SetGroup(group, false, forceDisplay);
+                BadgeConsoleSilencer.Silent(() => player.ReferenceHub.serverRoles.SetGroup(group, false, forceDisplay));
                 Logger.Debug($"Rank for {data.Nickname} is now: {player.GroupName} ({player.ReferenceHub.serverRoles.Network_myColor})");
 
                 return true;

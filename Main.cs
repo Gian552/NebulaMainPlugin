@@ -29,6 +29,10 @@ namespace NebMainPluginLabApi
 
         internal static Config Instance;
 
+        private const string HarmonyId = "nebula.mainplugin";
+
+        private HarmonyLib.Harmony _harmony;
+
         public override void Enable()
         {
             if (DateTime.Now.Month == 12)
@@ -44,6 +48,9 @@ namespace NebMainPluginLabApi
             Logger.Info("[Setting first Instances and Patches...]");
 
             Instance = this.Config;
+
+            _harmony = new HarmonyLib.Harmony(HarmonyId);
+            _harmony.PatchAll();
 
             Logger.Info("[Enabling Systems]");
 
@@ -115,6 +122,9 @@ namespace NebMainPluginLabApi
 
             Logger.Info("Disabling WarteMusik...");
             WarteMusik.Disable();
+
+            _harmony?.UnpatchAll(HarmonyId);
+            _harmony = null;
         }
     }
 }

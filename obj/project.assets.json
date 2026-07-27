@@ -3829,6 +3829,7 @@
       "Discord.Net.Core >= 3.18.0",
       "Discord.Net.Rest >= 3.18.0",
       "Discord.Net.Webhook >= 3.18.0",
+      "Lib.Harmony >= 2.2.2",
       "Microsoft.Bcl.AsyncInterfaces >= 6.0.0",
       "MongoDB.Bson >= 3.6.0",
       "MongoDB.Driver >= 3.6.0",
@@ -3891,6 +3892,10 @@
           "Discord.Net.Webhook": {
             "target": "Package",
             "version": "[3.18.0, )"
+          },
+          "Lib.Harmony": {
+            "target": "Package",
+            "version": "[2.2.2, )"
           },
           "Microsoft.Bcl.AsyncInterfaces": {
             "target": "Package",

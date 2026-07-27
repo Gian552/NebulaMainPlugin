@@ -47,6 +47,10 @@
               "target": "Package",
               "version": "[3.18.0, )"
             },
+            "Lib.Harmony": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
             "Microsoft.Bcl.AsyncInterfaces": {
               "target": "Package",
               "version": "[6.0.0, )"

@@ -571,7 +571,7 @@ namespace NebMainPluginLabApi.Systems.Database
             if (data == null)
                 return false;
 
-            return ApplyDiscordRole(ply, data);
+            return ApplyDiscordRole(ply, data, forceDisplay: true);
         }
 
         /// <summary>
@@ -746,7 +746,7 @@ namespace NebMainPluginLabApi.Systems.Database
 
             Settings.EventHandles.SendRoleOptions(player);
         }
-        private static bool ApplyDiscordRole(Player player, PlayerData data)
+        private static bool ApplyDiscordRole(Player player, PlayerData data, bool forceDisplay = false)
         {
             if (player?.ReferenceHub == null || data == null)
                 return false;
@@ -785,7 +785,7 @@ namespace NebMainPluginLabApi.Systems.Database
                 };
 
                 Logger.Debug($"Trying to set rank for {data.Nickname} to {group.Name}");
-                player.ReferenceHub.serverRoles.SetGroup(group, false, false);
+                player.ReferenceHub.serverRoles.SetGroup(group, false, forceDisplay);
                 Logger.Debug($"Rank for {data.Nickname} is now: {player.GroupName} ({player.ReferenceHub.serverRoles.Network_myColor})");
 
                 AnnounceBadge(player, 0.5f);
@@ -898,7 +898,7 @@ namespace NebMainPluginLabApi.Systems.Database
                 return;
 
             Logger.Debug($"Restoring wiped badge for {data.Nickname} ({data.dcRole}).");
-            ApplyDiscordRole(player, data);
+            ApplyDiscordRole(player, data, forceDisplay: true);
         }
 
         private static void OnPlayerLeft(PlayerLeftEventArgs ev)

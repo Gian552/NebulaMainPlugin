@@ -279,7 +279,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
         }
         public static void RegisterHintDisplay(Player player)
         {
-            var element = new DynamicElement(position: 750, contentGetter: rh =>
+            var element = new DynamicElement(position: 70, contentGetter: rh =>
             {
                 var p = Player.Get(rh);
                 if (p == null) return string.Empty;
@@ -301,7 +301,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
             })
             {
                 ZIndex = 10,
-                VerticalAlign = VerticalAlign.Down,
+                VerticalAlign = VerticalAlign.Up,
                 UpdateInterval = TimeSpan.FromSeconds(1),
                 ShowToSpectators = true
             };

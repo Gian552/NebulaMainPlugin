@@ -11,6 +11,7 @@ using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
+using MEC;
 using NebMainPluginLabApi;
 using NebMainPluginLabApi.API;
 using NebMainPluginLabApi.API.Enums;
@@ -105,6 +106,7 @@ namespace NebMainPluginLabApi.Systems.Database
             PlayerEvents.Left += OnPlayerLeft;
             ServerEvents.RoundEnded += OnRoundEnded;
             PlayerEvents.Joined += OnJoined;
+            PlayerEvents.ChangedBadgeVisibility += OnBadgeVisibilityChanged;
 
             XP.Enable();
         }
@@ -134,6 +136,7 @@ namespace NebMainPluginLabApi.Systems.Database
             PlayerEvents.Left -= OnPlayerLeft;
             ServerEvents.RoundEnded -= OnRoundEnded;
             PlayerEvents.Joined -= OnJoined;
+            PlayerEvents.ChangedBadgeVisibility -= OnBadgeVisibilityChanged;
 
             XP.Disable();
 
@@ -782,16 +785,97 @@ namespace NebMainPluginLabApi.Systems.Database
                 };
 
                 Logger.Debug($"Trying to set rank for {data.Nickname} to {group.Name}");
-                player.ReferenceHub.serverRoles.SetGroup(group, false, true);
+                player.ReferenceHub.serverRoles.SetGroup(group, false, false);
                 Logger.Debug($"Rank for {data.Nickname} is now: {player.GroupName} ({player.ReferenceHub.serverRoles.Network_myColor})");
 
-                return player.GroupName == group.BadgeText;
+                AnnounceBadge(player, 0.5f);
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Error while setting rank for {data.Nickname}: {ex}");
                 return false;
             }
+        }
+
+        /// <summary>
+        /// True when the player has a badge that SCP:SL is currently hiding (hidetag / Badge-Einstellung).
+        /// </summary>
+        internal static bool IsBadgeHidden(Player player)
+        {
+            var roles = player?.ReferenceHub?.serverRoles;
+            if (roles == null)
+                return false;
+
+            return !string.IsNullOrEmpty(roles.HiddenBadge) || roles.GlobalHidden;
+        }
+
+        private static string BadgeHex(Player player, string colorName)
+        {
+            var named = player?.ReferenceHub?.serverRoles?.NamedColors?
+                .FirstOrDefault(c => c != null && c.Name == colorName);
+
+            return string.IsNullOrEmpty(named?.ColorHex) ? null : named.ColorHex;
+        }
+
+        /// <summary>
+        /// Tells the player which badge is active and whether it is currently hidden.
+        /// </summary>
+        internal static void AnnounceBadge(Player player, float delay)
+        {
+            if (player?.UserId == null)
+                return;
+
+            string userId = player.UserId;
+
+            Timing.CallDelayed(delay, () =>
+            {
+                try
+                {
+                    Player current = Player.List.FirstOrDefault(p => p.UserId == userId);
+                    if (current?.ReferenceHub == null)
+                        return;
+
+                    var data = PlayerDataCache.Get(userId);
+                    if (data == null || data.dcRole == Roles.DiscordRoles.None)
+                        return;
+
+                    if (!PermissionRegistry.TryGetRoleInfo(data.dcRole, out var rankData) || rankData == null)
+                        return;
+
+                    bool hidden = IsBadgeHidden(current);
+
+                    if (BadgeStates.TryGetValue(userId, out var last)
+                        && last.Hidden == hidden
+                        && (DateTime.Now - last.At).TotalSeconds < 2)
+                        return;
+
+                    BadgeStates[userId] = (hidden, DateTime.Now);
+
+                    string hex = BadgeHex(current, rankData.Color);
+                    string name = hex == null ? rankData.DisplayName : $"<color=#{hex}>{rankData.DisplayName}</color>";
+
+                    HintsAPI.AddHint(current, hidden
+                        ? $"Dein Rang {name} ist <color=#FF0000>versteckt</color>. Tippe <b>showtag</b> in die Spielkonsole (Ö), um ihn anzuzeigen."
+                        : $"Dein Rang: {name}", 5);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"Error while announcing badge: {ex.Message}");
+                }
+            });
+        }
+
+        private static readonly Dictionary<string, (bool Hidden, DateTime At)> BadgeStates =
+            new Dictionary<string, (bool, DateTime)>();
+
+        private static void OnBadgeVisibilityChanged(PlayerChangedBadgeVisibilityEventArgs ev)
+        {
+            var player = ev.Player;
+            if (player?.UserId == null)
+                return;
+
+            AnnounceBadge(player, 0.1f);
         }
 
         private static void OnPlayerLeft(PlayerLeftEventArgs ev)
@@ -802,6 +886,7 @@ namespace NebMainPluginLabApi.Systems.Database
             UpdateDataAsync(ev.Player);
             SessionVariables.Clear(ev.Player);
             Settings.EventHandles.Forget(ev.Player.UserId);
+            BadgeStates.Remove(ev.Player.UserId);
         }
 
         private static async void OnRoundEnded(RoundEndedEventArgs ev)

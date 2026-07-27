@@ -57,15 +57,12 @@ namespace NebMainPluginLabApi.Systems.Settings
 
                 if (!Systems.Database.Database.SetSelectedRole(p, role))
                 {
-                    if (role != API.Enums.Roles.DiscordRoles.None)
-                        HintsAPI.AddHint(p, "Dein Rang konnte nicht gesetzt werden.", 3);
-
+                    HintsAPI.AddHint(p, "Dein Rang konnte nicht gesetzt werden.", 3);
                     return;
                 }
 
-                HintsAPI.AddHint(p, role == API.Enums.Roles.DiscordRoles.None
-                    ? "Dein Rang wird jetzt nicht mehr angezeigt."
-                    : $"Dein Rang ist jetzt: {role.ToRoleString()}", 3);
+                if (role == API.Enums.Roles.DiscordRoles.None)
+                    HintsAPI.AddHint(p, "Dein Rang wird jetzt nicht mehr angezeigt.", 3);
             }
             catch (Exception e)
             {

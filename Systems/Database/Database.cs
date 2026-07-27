@@ -633,6 +633,10 @@ namespace NebMainPluginLabApi.Systems.Database
                 return false;
             }
 
+            // War der Badge bis eben sichtbar, muss er es nach dem Wechsel bleiben.
+            // Ohne das steigt SetGroup im Hidden-Zweig vorzeitig aus und der alte Tag bleibt stehen.
+            bool wasVisible = !IsBadgeHidden(player) && !string.IsNullOrEmpty(player.GroupName);
+
             data.dcRole = role;
             PlayerDataCache.Set(player.UserId, data);
             SaveSelectedRoleAsync(data);
@@ -643,7 +647,11 @@ namespace NebMainPluginLabApi.Systems.Database
                 return true;
             }
 
-            return ApplyDiscordRole(player, data);
+            if (!ApplyDiscordRole(player, data, forceDisplay: wasVisible))
+                return false;
+
+            AnnounceBadge(player, 0.2f);
+            return true;
         }
 
         private static async void SaveSelectedRoleAsync(PlayerData data)
@@ -744,6 +752,7 @@ namespace NebMainPluginLabApi.Systems.Database
                 ApplyDiscordRole(player, freshData);
             }
 
+            AnnounceBadge(player, 1f);
             Settings.EventHandles.SendRoleOptions(player);
         }
         private static bool ApplyDiscordRole(Player player, PlayerData data, bool forceDisplay = false)
@@ -788,7 +797,6 @@ namespace NebMainPluginLabApi.Systems.Database
                 player.ReferenceHub.serverRoles.SetGroup(group, false, forceDisplay);
                 Logger.Debug($"Rank for {data.Nickname} is now: {player.GroupName} ({player.ReferenceHub.serverRoles.Network_myColor})");
 
-                AnnounceBadge(player, 0.5f);
                 return true;
             }
             catch (Exception ex)
@@ -856,7 +864,7 @@ namespace NebMainPluginLabApi.Systems.Database
                     string name = hex == null ? rankData.DisplayName : $"<color=#{hex}>{rankData.DisplayName}</color>";
 
                     HintsAPI.AddHint(current, hidden
-                        ? $"Dein Rang {name} ist <color=#FF0000>versteckt</color>. Tippe <b>showtag</b> in die Spielkonsole (Ö), um ihn anzuzeigen."
+                        ? $"Dein Rang: {name} (versteckt)"
                         : $"Dein Rang: {name}", 5);
                 }
                 catch (Exception ex)
@@ -876,7 +884,6 @@ namespace NebMainPluginLabApi.Systems.Database
                 return;
 
             RestoreBadgeIfWiped(player);
-            AnnounceBadge(player, 0.1f);
         }
 
         /// <summary>

@@ -141,6 +141,10 @@
         <NonDeployable Include="System.ValueTuple" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="README.md" />
+    </ItemGroup>
+
     <Target Name="BuildDist" AfterTargets="Build">
         <ItemGroup>
             <ServerProvided Include="libs\*.dll" />

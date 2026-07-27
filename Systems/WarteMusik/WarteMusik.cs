@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
 using NLayer;
 using LabApi.Features.Audio;
@@ -15,6 +16,8 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
 {
     public static class WarteMusik
     {
+        private const int MaxSpeakers = 32;
+
         private static readonly string[] SupportedExtensions = { ".wav", ".mp3" };
         private static readonly System.Random _random = new System.Random();
 
@@ -22,11 +25,30 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
 
         private static readonly Dictionary<string, int> _volumePercent = new Dictionary<string, int>();
 
+        private static readonly Dictionary<string, PlayerStream> _playerStreams = new Dictionary<string, PlayerStream>();
+
         private static SpeakerToy[] _speakers = new SpeakerToy[0];
         private static float[] _samples;
+        private static float[] _activeSamples;
         private static string _loadedFile;
+        private static bool _playing;
+        private static bool _limitWarned;
 
-        private static int Steps => Mathf.Clamp(Main.Instance.WarteMusikVolumeSteps, 1, 16);
+        private sealed class PlayerStream
+        {
+            internal SpeakerToy Speaker;
+            internal int Slot;
+        }
+
+        private static VolumeMode Mode => Main.Instance.WarteMusikVolumeMode;
+
+        private static byte BaseId => Main.Instance.WarteMusikControllerId;
+
+        private static int MaxSlots => Mathf.Clamp(256 - BaseId, 1, MaxSpeakers);
+
+        private static int Steps => Mathf.Clamp(Main.Instance.WarteMusikVolumeSteps, 1, MaxSlots);
+
+        private static int MaxStreams => Mathf.Clamp(Main.Instance.WarteMusikMaxStreams, 1, MaxSlots);
 
         internal static void SetMuted(Player player, bool muted)
         {
@@ -37,6 +59,8 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 _muted.Add(player.UserId);
             else
                 _muted.Remove(player.UserId);
+
+            EnsurePlayerStream(player);
         }
 
         internal static void SetVolume(Player player, float percent)
@@ -45,6 +69,19 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 return;
 
             _volumePercent[player.UserId] = Mathf.Clamp(Mathf.RoundToInt(percent), 0, 100);
+
+            EnsurePlayerStream(player);
+        }
+
+        private static int PercentFor(Player player)
+        {
+            if (player?.UserId == null)
+                return 100;
+
+            if (_muted.Contains(player.UserId))
+                return 0;
+
+            return _volumePercent.TryGetValue(player.UserId, out int v) ? v : 100;
         }
 
         private static int BucketFor(Player player)
@@ -54,11 +91,7 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
             if (player?.UserId == null)
                 return steps;
 
-            if (_muted.Contains(player.UserId))
-                return 0;
-
-            int percent = _volumePercent.TryGetValue(player.UserId, out int v) ? v : 100;
-            return Mathf.Clamp(Mathf.RoundToInt(percent / 100f * steps), 0, steps);
+            return Mathf.Clamp(Mathf.RoundToInt(PercentFor(player) / 100f * steps), 0, steps);
         }
 
         public static void Enable()
@@ -79,12 +112,16 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
 
             ServerEvents.WaitingForPlayers += OnWaitingForPlayers;
             ServerEvents.RoundStarted += OnRoundStarted;
+            PlayerEvents.Joined += OnJoined;
+            PlayerEvents.Left += OnLeft;
         }
 
         public static void Disable()
         {
             ServerEvents.WaitingForPlayers -= OnWaitingForPlayers;
             ServerEvents.RoundStarted -= OnRoundStarted;
+            PlayerEvents.Joined -= OnJoined;
+            PlayerEvents.Left -= OnLeft;
             StopMusic();
         }
 
@@ -101,30 +138,14 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
 
                 StopMusic();
 
-                int steps = Steps;
-                float master = Mathf.Clamp01(Main.Instance.WarteMusikVolume);
-                bool loop = Main.Instance.WarteMusikLoop;
-                byte baseId = Main.Instance.WarteMusikControllerId;
+                _activeSamples = samples;
+                _playing = true;
+                _limitWarned = false;
 
-                _speakers = new SpeakerToy[steps];
-
-                for (int i = 0; i < steps; i++)
-                {
-                    int bucket = i + 1;
-
-                    SpeakerToy speaker = SpeakerToy.Create(Vector3.zero);
-                    speaker.ControllerId = (byte)(baseId + i);
-                    speaker.IsSpatial = false;
-                    speaker.MinDistance = 0f;
-                    speaker.MaxDistance = 10000f;
-                    speaker.Volume = master * bucket / steps;
-                    speaker.ValidPlayers = pl => BucketFor(pl) == bucket;
-                    speaker.Play(samples, queue: false, loop: loop);
-
-                    _speakers[i] = speaker;
-                }
-
-                Logger.Debug($"[WarteMusik] {steps} Lautsprecher erstellt (ControllerIds {baseId}-{baseId + steps - 1}), Wiedergabe gestartet.");
+                if (Mode == VolumeMode.Spieler)
+                    StartPlayerMode();
+                else
+                    StartSegmentMode();
             }
             catch (Exception ex)
             {
@@ -132,27 +153,173 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
             }
         }
 
+        private static void StartSegmentMode()
+        {
+            int steps = Steps;
+            float master = Mathf.Clamp01(Main.Instance.WarteMusikVolume);
+            bool loop = Main.Instance.WarteMusikLoop;
+            byte baseId = BaseId;
+
+            _speakers = new SpeakerToy[steps];
+
+            for (int i = 0; i < steps; i++)
+            {
+                int bucket = i + 1;
+
+                SpeakerToy speaker = CreateSpeaker((byte)(baseId + i), master * bucket / steps);
+                speaker.ValidPlayers = pl => BucketFor(pl) == bucket;
+                speaker.Play(_activeSamples, queue: false, loop: loop);
+
+                _speakers[i] = speaker;
+            }
+
+            Logger.Debug($"[WarteMusik] Modus Segmente: {steps} Lautsprecher erstellt (ControllerIds {baseId}-{baseId + steps - 1}), Wiedergabe gestartet.");
+        }
+
+        private static void StartPlayerMode()
+        {
+            foreach (Player player in Player.List)
+                EnsurePlayerStream(player);
+
+            Logger.Debug($"[WarteMusik] Modus Spieler: {_playerStreams.Count} Stream(s) fuer {Player.List.Count()} Spieler gestartet (max. {MaxStreams}).");
+        }
+
+        private static void EnsurePlayerStream(Player player)
+        {
+            if (!_playing || Mode != VolumeMode.Spieler || _activeSamples == null)
+                return;
+
+            if (player?.UserId == null)
+                return;
+
+            float volume = Mathf.Clamp01(Main.Instance.WarteMusikVolume) * (PercentFor(player) / 100f);
+
+            if (_playerStreams.TryGetValue(player.UserId, out PlayerStream stream))
+            {
+                if (volume <= 0f)
+                    RemovePlayerStream(player.UserId);
+                else if (stream.Speaker != null)
+                    stream.Speaker.Volume = volume;
+
+                return;
+            }
+
+            if (volume <= 0f)
+                return;
+
+            int slot = NextFreeSlot();
+            if (slot < 0)
+            {
+                if (!_limitWarned)
+                {
+                    _limitWarned = true;
+                    Logger.Warn($"[WarteMusik] Alle {MaxStreams} Audio-Streams belegt - weitere Spieler hoeren keine Musik. Erhoehe WarteMusikMaxStreams oder nutze den Modus Segmente.");
+                }
+
+                return;
+            }
+
+            try
+            {
+                int position = ReferencePosition();
+                string userId = player.UserId;
+
+                SpeakerToy speaker = CreateSpeaker((byte)(BaseId + slot), volume);
+                speaker.ValidPlayers = pl => pl != null && pl.UserId == userId;
+                speaker.Play(_activeSamples, queue: false, loop: Main.Instance.WarteMusikLoop);
+
+                if (speaker.Transmitter != null)
+                    speaker.Transmitter.CurrentPosition = position;
+
+                _playerStreams[userId] = new PlayerStream { Speaker = speaker, Slot = slot };
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"[WarteMusik] Konnte Stream fuer {player.Nickname} nicht starten: {ex.Message}");
+            }
+        }
+
+        private static SpeakerToy CreateSpeaker(byte controllerId, float volume)
+        {
+            SpeakerToy speaker = SpeakerToy.Create(Vector3.zero);
+            speaker.ControllerId = controllerId;
+            speaker.IsSpatial = false;
+            speaker.MinDistance = 0f;
+            speaker.MaxDistance = 10000f;
+            speaker.Volume = volume;
+            return speaker;
+        }
+
+        private static int NextFreeSlot()
+        {
+            int max = MaxStreams;
+
+            for (int slot = 0; slot < max; slot++)
+            {
+                if (!_playerStreams.Values.Any(s => s.Slot == slot))
+                    return slot;
+            }
+
+            return -1;
+        }
+
+        private static int ReferencePosition()
+        {
+            foreach (PlayerStream stream in _playerStreams.Values)
+            {
+                AudioTransmitter transmitter = stream.Speaker?.Transmitter;
+                if (transmitter != null && transmitter.IsPlaying)
+                    return transmitter.CurrentPosition;
+            }
+
+            return 0;
+        }
+
+        private static void RemovePlayerStream(string userId)
+        {
+            if (userId == null || !_playerStreams.TryGetValue(userId, out PlayerStream stream))
+                return;
+
+            _playerStreams.Remove(userId);
+            DestroySpeaker(stream.Speaker);
+        }
+
+        private static void OnJoined(PlayerJoinedEventArgs ev) => EnsurePlayerStream(ev.Player);
+
+        private static void OnLeft(PlayerLeftEventArgs ev) => RemovePlayerStream(ev.Player?.UserId);
+
         private static void OnRoundStarted() => StopMusic();
 
         private static void StopMusic()
         {
             foreach (SpeakerToy speaker in _speakers)
-            {
-                if (speaker == null)
-                    continue;
-
-                try
-                {
-                    speaker.Transmitter?.Stop();
-                    speaker.Destroy();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Debug($"[WarteMusik] Fehler beim Stoppen: {ex.Message}");
-                }
-            }
+                DestroySpeaker(speaker);
 
             _speakers = new SpeakerToy[0];
+
+            foreach (PlayerStream stream in _playerStreams.Values.ToArray())
+                DestroySpeaker(stream.Speaker);
+
+            _playerStreams.Clear();
+
+            _activeSamples = null;
+            _playing = false;
+        }
+
+        private static void DestroySpeaker(SpeakerToy speaker)
+        {
+            if (speaker == null)
+                return;
+
+            try
+            {
+                speaker.Transmitter?.Stop();
+                speaker.Destroy();
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug($"[WarteMusik] Fehler beim Stoppen: {ex.Message}");
+            }
         }
 
         private static string GetMusicFolder()

@@ -155,8 +155,14 @@ namespace NebMainPluginLabApi
         [Description("Maximale Lautstärke der WarteMusik (0.0 bis 1.0). Der Regler in den Einstellungen skaliert diesen Wert.")]
         public float WarteMusikVolume { get; set; } = 0.5f;
 
-        [Description("Anzahl der wählbaren Lautstärke-Stufen. Jede Stufe kostet einen zusätzlichen Audio-Stream (CPU).")]
+        [Description("Wie die Lautstärke pro Spieler umgesetzt wird. 'Segmente' = feste Anzahl Lautsprecher, jeder Spieler wird auf die nächste Stufe gerundet. 'Spieler' = ein eigener Lautsprecher pro Zuhörer, dadurch exakt 0-100%.")]
+        public Systems.WarteMusik.VolumeMode WarteMusikVolumeMode { get; set; } = Systems.WarteMusik.VolumeMode.Segmente;
+
+        [Description("Nur im Modus 'Segmente': Anzahl der wählbaren Lautstärke-Stufen (1 bis 32). Jede Stufe kostet einen zusätzlichen Audio-Stream (CPU).")]
         public int WarteMusikVolumeSteps { get; set; } = 8;
+
+        [Description("Nur im Modus 'Spieler': Maximale Anzahl gleichzeitiger Audio-Streams (1 bis 32). Sind mehr Zuhörer da als Streams, hören die überzähligen Spieler keine Musik.")]
+        public int WarteMusikMaxStreams { get; set; } = 32;
 
         [Description("Basis-ControllerId der Lautsprecher. Nur ändern, wenn ein anderes Plugin dieselben IDs benutzt.")]
         public byte WarteMusikControllerId { get; set; } = 200;

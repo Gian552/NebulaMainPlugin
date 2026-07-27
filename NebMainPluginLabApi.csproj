@@ -71,6 +71,7 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Systems\Events\adhsl.cs" />
         <Compile Include="Systems\SpawnProtection\SpawnProtection.cs" />
+        <Compile Include="Systems\WarteMusik\VolumeMode.cs" />
         <Compile Include="Systems\WarteMusik\WarteMusik.cs" />
         <Compile Include="Systems\RemoteKeycard\PlayerExtensions.cs" />
         <Compile Include="Systems\RemoteKeycard\RemoteKeycards.cs" />

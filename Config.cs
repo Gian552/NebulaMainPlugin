@@ -9,6 +9,8 @@ namespace NebMainPluginLabApi
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; } = false;
 
+        [Description(@"Hier werden die Patchnotes eingetragen. Zb. • Neues Feature 1 \n• Neues Feature 2 \n . WICHTIG: Der String MUSS in Anführungszeichen sein")]
+        public string PatchNotes { get; set; }
         [Description("Der Servername, der in jeder benachrichtigung angezeigt wird.")]
         public string serverName { get; set; } = "<color=#ffd700>N</color><color=#ffb347>e</color><color=#ff7f50>b</color><color=#ff6ec7>u</color><color=#ba55d3>l</color><color=#8a2be2>a</color>";
 

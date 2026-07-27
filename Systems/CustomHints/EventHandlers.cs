@@ -42,6 +42,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
             Hints.RefreshServerName(ev.Player);
             Hints.RefreshRole(ev.Player);
             Hints.RegisterHintDisplay(ev.Player);
+            Hints.RefreshPatchNotes(ev.Player);
         }
 
         private static void OnChangingRole(PlayerChangingRoleEventArgs ev)
@@ -55,6 +56,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
                 Hints.RefreshSCPHints(ev.Player);
                 Hints.RegisterHintDisplay(ev.Player);
                 Hints.RefreshKills(ev.Player);
+                Hints.RefreshPatchNotes(ev.Player);
             });
             
         }

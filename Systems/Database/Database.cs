@@ -875,7 +875,30 @@ namespace NebMainPluginLabApi.Systems.Database
             if (player?.UserId == null)
                 return;
 
+            RestoreBadgeIfWiped(player);
             AnnounceBadge(player, 0.1f);
+        }
+
+        /// <summary>
+        /// showtag ruft RefreshLocalTag auf. Das leert HiddenBadge und laedt die Gruppe
+        /// aus config_remoteadmin neu - dort stehen unsere Discord-Raenge aber nicht drin,
+        /// also waere der Badge danach komplett weg. Hier setzen wir ihn wieder.
+        /// </summary>
+        private static void RestoreBadgeIfWiped(Player player)
+        {
+            var roles = player?.ReferenceHub?.serverRoles;
+            if (roles == null)
+                return;
+
+            if (!string.IsNullOrEmpty(roles.HiddenBadge) || !string.IsNullOrEmpty(player.GroupName))
+                return;
+
+            var data = PlayerDataCache.Get(player.UserId);
+            if (data == null || data.dcRole == Roles.DiscordRoles.None)
+                return;
+
+            Logger.Debug($"Restoring wiped badge for {data.Nickname} ({data.dcRole}).");
+            ApplyDiscordRole(player, data);
         }
 
         private static void OnPlayerLeft(PlayerLeftEventArgs ev)

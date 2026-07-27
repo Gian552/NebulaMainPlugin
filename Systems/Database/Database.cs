@@ -893,9 +893,7 @@ namespace NebMainPluginLabApi.Systems.Database
                     string hex = BadgeHex(current, rankData.Color);
                     string name = hex == null ? rankData.DisplayName : $"<color=#{hex}>{rankData.DisplayName}</color>";
 
-                    HintsAPI.AddHint(current, hidden
-                        ? $"Dein Rang: {name} (versteckt)"
-                        : $"Dein Rang: {name}", 5);
+                    HintsAPI.AddHint(current, $"Dein Rang: {name}", 5);
                 }
                 catch (Exception ex)
                 {

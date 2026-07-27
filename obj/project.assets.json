@@ -11,10 +11,14 @@
           "System.ValueTuple": "4.5.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Rest/3.18.0": {
@@ -23,10 +27,14 @@
           "Discord.Net.Core": "3.18.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Webhook/3.18.0": {
@@ -36,10 +44,14 @@
           "Discord.Net.Rest": "3.18.0"
         },
         "compile": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         }
       },
       "DnsClient/1.6.1": {
@@ -49,19 +61,27 @@
           "System.Buffers": "4.5.1"
         },
         "compile": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Lib.Harmony/2.2.2": {
         "type": "package",
         "compile": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
@@ -70,19 +90,27 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Win32.Registry/5.0.0": {
@@ -95,10 +123,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/Microsoft.Win32.Registry.dll": {}
+          "ref/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Win32.Registry.dll": {}
+          "lib/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/win/lib/net461/Microsoft.Win32.Registry.dll": {
@@ -114,10 +146,14 @@
           "System.Runtime.CompilerServices.Unsafe": "5.0.0"
         },
         "compile": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Driver/3.6.0": {
@@ -144,19 +180,27 @@
           "System.Security.Cryptography.X509Certificates"
         ],
         "compile": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "NLayer/1.16.0": {
@@ -174,10 +218,14 @@
           "YamlDotNet": "11.0.1"
         },
         "compile": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         }
       },
       "RueI/3.1.2": {
@@ -187,10 +235,14 @@
           "Northwood.LabAPI": "1.1.1"
         },
         "compile": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SharpCompress/0.30.1": {
@@ -214,10 +266,14 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Buffers/4.5.1": {
@@ -226,10 +282,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net45/System.Buffers.dll": {}
+          "ref/net45/System.Buffers.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Buffers.dll": {}
+          "lib/net461/System.Buffers.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Collections.Immutable/8.0.0": {
@@ -239,10 +299,14 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/net462/_._": {}
@@ -254,10 +318,14 @@
           "System.Linq.Async": "6.0.1"
         },
         "compile": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.IO/4.3.0": {
@@ -279,10 +347,14 @@
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
         },
         "compile": {
-          "ref/net48/System.Linq.Async.dll": {}
+          "ref/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Linq.Async.dll": {}
+          "lib/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Memory/4.5.5": {
@@ -297,10 +369,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Net.Http/4.3.4": {
@@ -337,10 +413,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net46/System.Numerics.Vectors.dll": {}
+          "ref/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net46/System.Numerics.Vectors.dll": {}
+          "lib/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime/4.3.0": {
@@ -364,10 +444,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime.InteropServices.RuntimeInformation/4.3.0": {
@@ -398,10 +482,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.AccessControl.dll": {}
+          "ref/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Security.AccessControl.dll": {}
+          "lib/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/win/lib/net461/System.Security.AccessControl.dll": {
@@ -513,10 +601,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.Principal.Windows.dll": {}
+          "ref/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Security.Principal.Windows.dll": {}
+          "lib/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/win/lib/net461/System.Security.Principal.Windows.dll": {
@@ -535,10 +627,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll": {
@@ -556,10 +652,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.ValueTuple/4.5.0": {
@@ -571,16 +671,22 @@
           "ref/net47/System.ValueTuple.dll": {}
         },
         "runtime": {
-          "lib/net47/System.ValueTuple.dll": {}
+          "lib/net47/System.ValueTuple.dll": {
+            "related": ".xml"
+          }
         }
       },
       "YamlDotNet/11.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         }
       },
       "ZstdSharp.Port/0.7.3": {
@@ -607,10 +713,14 @@
           "System.ValueTuple": "4.5.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Rest/3.18.0": {
@@ -619,10 +729,14 @@
           "Discord.Net.Core": "3.18.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Webhook/3.18.0": {
@@ -632,10 +746,14 @@
           "Discord.Net.Rest": "3.18.0"
         },
         "compile": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         }
       },
       "DnsClient/1.6.1": {
@@ -645,19 +763,27 @@
           "System.Buffers": "4.5.1"
         },
         "compile": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Lib.Harmony/2.2.2": {
         "type": "package",
         "compile": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
@@ -666,19 +792,27 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Win32.Registry/5.0.0": {
@@ -691,10 +825,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/Microsoft.Win32.Registry.dll": {}
+          "ref/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "runtimes/win/lib/net461/Microsoft.Win32.Registry.dll": {}
+          "runtimes/win/lib/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Bson/3.6.0": {
@@ -704,10 +842,14 @@
           "System.Runtime.CompilerServices.Unsafe": "5.0.0"
         },
         "compile": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Driver/3.6.0": {
@@ -734,19 +876,27 @@
           "System.Security.Cryptography.X509Certificates"
         ],
         "compile": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "NLayer/1.16.0": {
@@ -764,10 +914,14 @@
           "YamlDotNet": "11.0.1"
         },
         "compile": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         }
       },
       "RueI/3.1.2": {
@@ -777,10 +931,14 @@
           "Northwood.LabAPI": "1.1.1"
         },
         "compile": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SharpCompress/0.30.1": {
@@ -804,10 +962,14 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Buffers/4.5.1": {
@@ -816,10 +978,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net45/System.Buffers.dll": {}
+          "ref/net45/System.Buffers.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Buffers.dll": {}
+          "lib/net461/System.Buffers.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Collections.Immutable/8.0.0": {
@@ -829,10 +995,14 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/net462/_._": {}
@@ -844,10 +1014,14 @@
           "System.Linq.Async": "6.0.1"
         },
         "compile": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.IO/4.3.0": {
@@ -869,10 +1043,14 @@
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
         },
         "compile": {
-          "ref/net48/System.Linq.Async.dll": {}
+          "ref/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Linq.Async.dll": {}
+          "lib/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Memory/4.5.5": {
@@ -887,10 +1065,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Net.Http/4.3.4": {
@@ -917,10 +1099,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net46/System.Numerics.Vectors.dll": {}
+          "ref/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net46/System.Numerics.Vectors.dll": {}
+          "lib/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime/4.3.0": {
@@ -944,10 +1130,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime.InteropServices.RuntimeInformation/4.3.0": {
@@ -968,10 +1158,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.AccessControl.dll": {}
+          "ref/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "runtimes/win/lib/net461/System.Security.AccessControl.dll": {}
+          "runtimes/win/lib/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Security.Cryptography.Algorithms/4.3.0": {
@@ -1043,10 +1237,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.Principal.Windows.dll": {}
+          "ref/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "runtimes/win/lib/net461/System.Security.Principal.Windows.dll": {}
+          "runtimes/win/lib/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Text.Encoding.CodePages/5.0.0": {
@@ -1059,10 +1257,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Threading.Tasks.Extensions/4.5.4": {
@@ -1074,10 +1276,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.ValueTuple/4.5.0": {
@@ -1089,16 +1295,22 @@
           "ref/net47/System.ValueTuple.dll": {}
         },
         "runtime": {
-          "lib/net47/System.ValueTuple.dll": {}
+          "lib/net47/System.ValueTuple.dll": {
+            "related": ".xml"
+          }
         }
       },
       "YamlDotNet/11.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         }
       },
       "ZstdSharp.Port/0.7.3": {
@@ -1125,10 +1337,14 @@
           "System.ValueTuple": "4.5.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Rest/3.18.0": {
@@ -1137,10 +1353,14 @@
           "Discord.Net.Core": "3.18.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Webhook/3.18.0": {
@@ -1150,10 +1370,14 @@
           "Discord.Net.Rest": "3.18.0"
         },
         "compile": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         }
       },
       "DnsClient/1.6.1": {
@@ -1163,19 +1387,27 @@
           "System.Buffers": "4.5.1"
         },
         "compile": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Lib.Harmony/2.2.2": {
         "type": "package",
         "compile": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
@@ -1184,19 +1416,27 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Win32.Registry/5.0.0": {
@@ -1209,10 +1449,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/Microsoft.Win32.Registry.dll": {}
+          "ref/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Win32.Registry.dll": {}
+          "lib/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Bson/3.6.0": {
@@ -1222,10 +1466,14 @@
           "System.Runtime.CompilerServices.Unsafe": "5.0.0"
         },
         "compile": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Driver/3.6.0": {
@@ -1252,19 +1500,27 @@
           "System.Security.Cryptography.X509Certificates"
         ],
         "compile": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "NLayer/1.16.0": {
@@ -1282,10 +1538,14 @@
           "YamlDotNet": "11.0.1"
         },
         "compile": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         }
       },
       "RueI/3.1.2": {
@@ -1295,10 +1555,14 @@
           "Northwood.LabAPI": "1.1.1"
         },
         "compile": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SharpCompress/0.30.1": {
@@ -1322,10 +1586,14 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Buffers/4.5.1": {
@@ -1334,10 +1602,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net45/System.Buffers.dll": {}
+          "ref/net45/System.Buffers.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Buffers.dll": {}
+          "lib/net461/System.Buffers.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Collections.Immutable/8.0.0": {
@@ -1347,10 +1619,14 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/net462/_._": {}
@@ -1362,10 +1638,14 @@
           "System.Linq.Async": "6.0.1"
         },
         "compile": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.IO/4.3.0": {
@@ -1387,10 +1667,14 @@
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
         },
         "compile": {
-          "ref/net48/System.Linq.Async.dll": {}
+          "ref/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Linq.Async.dll": {}
+          "lib/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Memory/4.5.5": {
@@ -1405,10 +1689,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Net.Http/4.3.4": {
@@ -1435,10 +1723,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net46/System.Numerics.Vectors.dll": {}
+          "ref/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net46/System.Numerics.Vectors.dll": {}
+          "lib/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime/4.3.0": {
@@ -1462,10 +1754,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime.InteropServices.RuntimeInformation/4.3.0": {
@@ -1486,10 +1782,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.AccessControl.dll": {}
+          "ref/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Security.AccessControl.dll": {}
+          "lib/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Security.Cryptography.Algorithms/4.3.0": {
@@ -1561,10 +1861,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.Principal.Windows.dll": {}
+          "ref/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Security.Principal.Windows.dll": {}
+          "lib/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Text.Encoding.CodePages/5.0.0": {
@@ -1577,10 +1881,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Threading.Tasks.Extensions/4.5.4": {
@@ -1592,10 +1900,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.ValueTuple/4.5.0": {
@@ -1607,16 +1919,22 @@
           "ref/net47/System.ValueTuple.dll": {}
         },
         "runtime": {
-          "lib/net47/System.ValueTuple.dll": {}
+          "lib/net47/System.ValueTuple.dll": {
+            "related": ".xml"
+          }
         }
       },
       "YamlDotNet/11.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         }
       },
       "ZstdSharp.Port/0.7.3": {
@@ -1643,10 +1961,14 @@
           "System.ValueTuple": "4.5.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Core.dll": {}
+          "lib/net461/Discord.Net.Core.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Rest/3.18.0": {
@@ -1655,10 +1977,14 @@
           "Discord.Net.Core": "3.18.0"
         },
         "compile": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Discord.Net.Rest.dll": {}
+          "lib/net461/Discord.Net.Rest.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Discord.Net.Webhook/3.18.0": {
@@ -1668,10 +1994,14 @@
           "Discord.Net.Rest": "3.18.0"
         },
         "compile": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Discord.Net.Webhook.dll": {}
+          "lib/netstandard2.0/Discord.Net.Webhook.dll": {
+            "related": ".xml"
+          }
         }
       },
       "DnsClient/1.6.1": {
@@ -1681,19 +2011,27 @@
           "System.Buffers": "4.5.1"
         },
         "compile": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net471/DnsClient.dll": {}
+          "lib/net471/DnsClient.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Lib.Harmony/2.2.2": {
         "type": "package",
         "compile": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/0Harmony.dll": {}
+          "lib/net48/0Harmony.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
@@ -1702,19 +2040,27 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Win32.Registry/5.0.0": {
@@ -1727,10 +2073,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/Microsoft.Win32.Registry.dll": {}
+          "ref/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/Microsoft.Win32.Registry.dll": {}
+          "lib/net461/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Bson/3.6.0": {
@@ -1740,10 +2090,14 @@
           "System.Runtime.CompilerServices.Unsafe": "5.0.0"
         },
         "compile": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Bson.dll": {}
+          "lib/net472/MongoDB.Bson.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MongoDB.Driver/3.6.0": {
@@ -1770,19 +2124,27 @@
           "System.Security.Cryptography.X509Certificates"
         ],
         "compile": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net472/MongoDB.Driver.dll": {}
+          "lib/net472/MongoDB.Driver.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/net45/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "NLayer/1.16.0": {
@@ -1800,10 +2162,14 @@
           "YamlDotNet": "11.0.1"
         },
         "compile": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/LabApi.dll": {}
+          "lib/net48/LabApi.dll": {
+            "related": ".xml"
+          }
         }
       },
       "RueI/3.1.2": {
@@ -1813,10 +2179,14 @@
           "Northwood.LabAPI": "1.1.1"
         },
         "compile": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/RueI.dll": {}
+          "lib/net48/RueI.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SharpCompress/0.30.1": {
@@ -1840,10 +2210,14 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Snappier.dll": {}
+          "lib/netstandard2.0/Snappier.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Buffers/4.5.1": {
@@ -1852,10 +2226,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net45/System.Buffers.dll": {}
+          "ref/net45/System.Buffers.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Buffers.dll": {}
+          "lib/net461/System.Buffers.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Collections.Immutable/8.0.0": {
@@ -1865,10 +2243,14 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net462/System.Collections.Immutable.dll": {}
+          "lib/net462/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/net462/_._": {}
@@ -1880,10 +2262,14 @@
           "System.Linq.Async": "6.0.1"
         },
         "compile": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Interactive.Async.dll": {}
+          "lib/net48/System.Interactive.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.IO/4.3.0": {
@@ -1905,10 +2291,14 @@
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
         },
         "compile": {
-          "ref/net48/System.Linq.Async.dll": {}
+          "ref/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net48/System.Linq.Async.dll": {}
+          "lib/net48/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Memory/4.5.5": {
@@ -1923,10 +2313,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Memory.dll": {}
+          "lib/net461/System.Memory.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Net.Http/4.3.4": {
@@ -1953,10 +2347,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net46/System.Numerics.Vectors.dll": {}
+          "ref/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net46/System.Numerics.Vectors.dll": {}
+          "lib/net46/System.Numerics.Vectors.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime/4.3.0": {
@@ -1980,10 +2378,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Runtime.InteropServices.RuntimeInformation/4.3.0": {
@@ -2004,10 +2406,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.AccessControl.dll": {}
+          "ref/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Security.AccessControl.dll": {}
+          "lib/net461/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Security.Cryptography.Algorithms/4.3.0": {
@@ -2079,10 +2485,14 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Security.Principal.Windows.dll": {}
+          "ref/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Security.Principal.Windows.dll": {}
+          "lib/net461/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Text.Encoding.CodePages/5.0.0": {
@@ -2095,10 +2505,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Text.Encoding.CodePages.dll": {}
+          "lib/net461/System.Text.Encoding.CodePages.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Threading.Tasks.Extensions/4.5.4": {
@@ -2110,10 +2524,14 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.ValueTuple/4.5.0": {
@@ -2125,16 +2543,22 @@
           "ref/net47/System.ValueTuple.dll": {}
         },
         "runtime": {
-          "lib/net47/System.ValueTuple.dll": {}
+          "lib/net47/System.ValueTuple.dll": {
+            "related": ".xml"
+          }
         }
       },
       "YamlDotNet/11.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net45/YamlDotNet.dll": {}
+          "lib/net45/YamlDotNet.dll": {
+            "related": ".xml"
+          }
         }
       },
       "ZstdSharp.Port/0.7.3": {
@@ -3435,8 +3859,9 @@
       "outputPath": "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/obj/",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "/home/gian/.config/NuGet/NuGet.Config"
+        "/home/gian/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net48"
@@ -3446,14 +3871,14 @@
       },
       "frameworks": {
         "net48": {
-          "targetAlias": "net48",
+          "framework": "net48",
           "projectReferences": {}
         }
       }
     },
     "frameworks": {
       "net48": {
-        "targetAlias": "net48",
+        "framework": "net48",
         "dependencies": {
           "Discord.Net.Core": {
             "target": "Package",

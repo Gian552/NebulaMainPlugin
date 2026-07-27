@@ -27,9 +27,6 @@ namespace NebMainPluginLabApi.Systems.CustomSettings
             SSDropdownSetting.DropdownEntryType.Regular,
             $"Wenn du SCP bist, kannst du hier in den ersten {Main.Instance.ScpSwapTimeout} Sekunden dein SCP tauschen, solange es noch niemand anderes hat.");
 
-        /// <summary>
-        /// Mute toggle for the lobby music.
-        /// </summary>
         internal static readonly SSTwoButtonsSetting MusicMute = new SSTwoButtonsSetting(
             23,
             "WarteMusik",
@@ -38,9 +35,6 @@ namespace NebMainPluginLabApi.Systems.CustomSettings
             false,
             "Schaltet die Musik in der Warte-Lobby für dich stumm.");
 
-        /// <summary>
-        /// Volume slider for the lobby music.
-        /// </summary>
         internal static readonly SSSliderSetting MusicVolume = new SSSliderSetting(
             24,
             "WarteMusik Lautstärke",

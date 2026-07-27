@@ -24,7 +24,6 @@ namespace NebMainPluginLabApi.API
         {
             string? webhook = Main.Instance?.WebHookLogs;
 
-            // Erst auf null pruefen - webhook.StartsWith auf null war eine NRE
             if (webhook is null || !webhook.StartsWith("https"))
             {
                 Logger.Error("Discord Webhook not valid!");
@@ -70,7 +69,6 @@ namespace NebMainPluginLabApi.API
         {
             string? webhook = Main.Instance?.TeamTimeControllWebhook;
 
-            // Validierung VOR dem Erstellen des Clients - der Ctor wirft bei ungueltiger URL
             if (webhook is null || !webhook.StartsWith("https"))
             {
                 Logger.Error("Discord Webhook not valid!");

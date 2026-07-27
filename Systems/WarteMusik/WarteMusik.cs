@@ -13,32 +13,21 @@ using Logger = LabApi.Features.Console.Logger;
 
 namespace NebMainPluginLabApi.Systems.WarteMusik
 {
-    /// <summary>
-    /// Spielt waehrend der Warte-Lobby (Waiting for players) Musik ueber einen
-    /// nicht-raeumlichen SpeakerToy ab. Pro Lobby wird ein zufaelliger Track aus dem
-    /// Music-Ordner gewaehlt; gestoppt wird beim Rundenstart.
-    /// Unterstuetzt WAV (PCM 8/16/24/32 bit und IEEE float 32 bit) sowie MP3 (via NLayer),
-    /// beliebige Samplerate/Kanalzahl - wird zu 48kHz Mono konvertiert.
-    /// </summary>
     public static class WarteMusik
     {
         private static readonly string[] SupportedExtensions = { ".wav", ".mp3" };
         private static readonly System.Random _random = new System.Random();
 
-        /// <summary>UserIds, die die Musik ueber die Server-Settings stummgeschaltet haben.</summary>
         private static readonly HashSet<string> _muted = new HashSet<string>();
 
-        /// <summary>UserId -> gewaehlte Lautstaerke in Prozent (0-100).</summary>
         private static readonly Dictionary<string, int> _volumePercent = new Dictionary<string, int>();
 
-        // Ein Lautsprecher pro Lautstaerke-Stufe; jeder Spieler hoert genau einen davon.
         private static SpeakerToy[] _speakers = new SpeakerToy[0];
         private static float[] _samples;
         private static string _loadedFile;
 
         private static int Steps => Mathf.Clamp(Main.Instance.WarteMusikVolumeSteps, 1, 16);
 
-        /// <summary>Setzt den Mute-Status eines Spielers (kommt vom Settings-Button).</summary>
         internal static void SetMuted(Player player, bool muted)
         {
             if (player?.UserId == null)
@@ -50,7 +39,6 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 _muted.Remove(player.UserId);
         }
 
-        /// <summary>Setzt die Lautstaerke eines Spielers in Prozent (kommt vom Settings-Regler).</summary>
         internal static void SetVolume(Player player, float percent)
         {
             if (player?.UserId == null)
@@ -59,10 +47,6 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
             _volumePercent[player.UserId] = Mathf.Clamp(Mathf.RoundToInt(percent), 0, 100);
         }
 
-        /// <summary>
-        /// Auf welche Lautstaerke-Stufe (0 = stumm, sonst 1..Steps) faellt dieser Spieler?
-        /// Wird pro Audio-Frame ausgewertet, Aenderungen wirken also sofort.
-        /// </summary>
         private static int BucketFor(Player player)
         {
             int steps = Steps;
@@ -81,7 +65,6 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
         {
             try
             {
-                // Music-Ordner anlegen, damit man die Tracks nur noch reinwerfen muss
                 string folder = GetMusicFolder();
                 if (!Directory.Exists(folder))
                     Directory.CreateDirectory(folder);
@@ -123,21 +106,17 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 bool loop = Main.Instance.WarteMusikLoop;
                 byte baseId = Main.Instance.WarteMusikControllerId;
 
-                // Die Lautstaerke eines SpeakerToys ist eine genetzwerkte Eigenschaft und gilt
-                // damit fuer alle Clients gleich. Fuer individuelle Lautstaerke brauchen wir
-                // deshalb pro Stufe einen eigenen Lautsprecher und routen die Spieler per
-                // ValidPlayers auf genau einen davon.
                 _speakers = new SpeakerToy[steps];
 
                 for (int i = 0; i < steps; i++)
                 {
-                    int bucket = i + 1; // fuer die Closure festhalten
+                    int bucket = i + 1;
 
                     SpeakerToy speaker = SpeakerToy.Create(Vector3.zero);
                     speaker.ControllerId = (byte)(baseId + i);
-                    speaker.IsSpatial = false;    // ueberall gleich laut hoerbar
-                    speaker.MinDistance = 0f;     // Distanz-Rolloff des AudioSource ausschalten,
-                    speaker.MaxDistance = 10000f; // egal wo die Lobby in der Szene liegt
+                    speaker.IsSpatial = false;
+                    speaker.MinDistance = 0f;
+                    speaker.MaxDistance = 10000f;
                     speaker.Volume = master * bucket / steps;
                     speaker.ValidPlayers = pl => BucketFor(pl) == bucket;
                     speaker.Play(samples, queue: false, loop: loop);
@@ -210,10 +189,8 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 return null;
             }
 
-            // Pro Lobby einen zufaelligen Track waehlen
             string path = tracks[_random.Next(tracks.Length)];
 
-            // Nur neu laden, wenn ein anderer Track dran ist
             if (_samples != null && _loadedFile == path)
                 return _samples;
 
@@ -241,7 +218,6 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 int chIdx = 0;
                 int read;
 
-                // Interleaved Floats lesen und direkt zu Mono mischen
                 while ((read = mpeg.ReadSamples(buf, 0, buf.Length)) > 0)
                 {
                     for (int i = 0; i < read; i++)
@@ -270,7 +246,7 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
             {
                 if (new string(br.ReadChars(4)) != "RIFF")
                     throw new InvalidDataException("Keine WAV-Datei (RIFF-Header fehlt)");
-                br.ReadInt32(); // Dateigroesse
+                br.ReadInt32();
                 if (new string(br.ReadChars(4)) != "WAVE")
                     throw new InvalidDataException("Keine WAV-Datei (WAVE-Kennung fehlt)");
 
@@ -282,23 +258,23 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                 {
                     string chunkId = new string(br.ReadChars(4));
                     int chunkSize = br.ReadInt32();
-                    long next = fs.Position + chunkSize + (chunkSize & 1); // Chunks sind 2-Byte-aligned
+                    long next = fs.Position + chunkSize + (chunkSize & 1);
 
                     if (chunkId == "fmt ")
                     {
                         format = br.ReadInt16();
                         channels = br.ReadInt16();
                         sampleRate = br.ReadInt32();
-                        br.ReadInt32(); // Byte-Rate
-                        br.ReadInt16(); // Block-Align
+                        br.ReadInt32();
+                        br.ReadInt16();
                         bits = br.ReadInt16();
 
-                        if (format == unchecked((short)0xFFFE)) // WAVE_FORMAT_EXTENSIBLE
+                        if (format == unchecked((short)0xFFFE))
                         {
-                            br.ReadInt16(); // cbSize
-                            br.ReadInt16(); // ValidBits
-                            br.ReadInt32(); // ChannelMask
-                            format = br.ReadInt16(); // erster Teil der SubFormat-GUID = eigentliches Format
+                            br.ReadInt16();
+                            br.ReadInt16();
+                            br.ReadInt32();
+                            format = br.ReadInt16();
                         }
                     }
                     else if (chunkId == "data")
@@ -335,15 +311,15 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
                     int o = (frame * channels + ch) * bytesPerSample;
                     float sample;
 
-                    if (format == 3 && bits == 32)      // IEEE float
+                    if (format == 3 && bits == 32)
                         sample = BitConverter.ToSingle(raw, o);
-                    else if (format == 1 && bits == 16) // PCM16
+                    else if (format == 1 && bits == 16)
                         sample = BitConverter.ToInt16(raw, o) / 32768f;
-                    else if (format == 1 && bits == 24) // PCM24 (little endian)
+                    else if (format == 1 && bits == 24)
                         sample = ((raw[o] << 8) | (raw[o + 1] << 16) | (raw[o + 2] << 24)) / 2147483648f;
-                    else if (format == 1 && bits == 32) // PCM32
+                    else if (format == 1 && bits == 32)
                         sample = BitConverter.ToInt32(raw, o) / 2147483648f;
-                    else if (format == 1 && bits == 8)  // PCM8 (unsigned)
+                    else if (format == 1 && bits == 8)
                         sample = (raw[o] - 128) / 128f;
                     else
                         throw new NotSupportedException($"WAV-Format nicht unterstuetzt (Format {format}, {bits} bit)");
@@ -357,7 +333,6 @@ namespace NebMainPluginLabApi.Systems.WarteMusik
             return mono;
         }
 
-        /// <summary>Einfaches lineares Resampling auf die Ziel-Samplerate.</summary>
         private static float[] Resample(float[] input, int fromRate, int toRate)
         {
             int outLen = (int)((long)input.Length * toRate / fromRate);

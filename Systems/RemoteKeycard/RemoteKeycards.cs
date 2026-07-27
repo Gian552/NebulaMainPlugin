@@ -47,7 +47,6 @@ namespace NebMainPluginLabApi.Systems.RemoteKeycard
                 Logger.Debug(
                     $"Allowed: {ev.IsAllowed}, CanOpen: {ev.CanOpen}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.Permissions)}, Current Item: ${ev.Player.CurrentItem}");
 
-                // CanOpen traegt das Ergebnis der Vanilla-Keycard-Pruefung (IsAllowed ist nur das Cancel-Flag)
                 if (ev.IsAllowed && !ev.CanOpen && ev.Player.HasKeycardPermission(ev.Door.Permissions) &&
                     !ev.Door.IsLocked)
                     ev.CanOpen = true;

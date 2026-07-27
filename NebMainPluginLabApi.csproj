@@ -44,10 +44,6 @@
 
 
     <!-- DLL Referenzen -->
-    <!-- libs\Microsoft.Bcl.AsyncInterfaces.dll (SCP:SL/Unity) leitet IAsyncEnumerable per
-         Type-Forward an netstandard -> mscorlib weiter. Unter Mono kennt mscorlib (4.8-api)
-         den Typ nicht -> CS7069. Darum diese DLL ausschliessen und stattdessen die
-         NuGet-Variante (net461) verwenden, die die Typen wirklich definiert. -->
     <ItemGroup>
         <Reference Include="libs\*.dll"
                    Exclude="libs\Microsoft.Bcl.AsyncInterfaces.dll">
@@ -119,37 +115,16 @@
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 
 
-    <!-- ===================================================================
-         Deploy-Layout bauen.
-
-         LabAPI laedt NUR die Plugin-DLL aus plugins\ - die NuGet-Abhaengigkeiten
-         muessen separat nach dependencies\ , sonst gibt es beim Enable eine
-         ReflectionTypeLoadException ("Could not load file or assembly
-         'MongoDB.Bson' ...").
-
-         Ergebnis nach dem Build:
-             dist\plugins\global\NebMainPluginLabApi.dll
-             dist\dependencies\global\*.dll
-
-         Nicht deployed werden:
-           - alles was auch in libs\ liegt  -> bringt der Server selbst mit
-           - reine Referenz-/Facade-Assemblies aus alten NuGet-Paketen: die
-             enthalten keinen Code und wuerden die Mono-Laufzeit ueberschreiben
-           - 0Harmony: das Plugin referenziert Harmony nicht, der Server hat es
-         =================================================================== -->
     <PropertyGroup>
         <DistDir>dist\</DistDir>
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- RueI ist selbst ein LabAPI-Plugin (macht seine Harmony-Patches in Enable())
-             und muss deshalb nach plugins\, nicht nach dependencies\ -->
         <PluginAssembly Include="$(AssemblyName)" />
         <PluginAssembly Include="RueI" />
     </ItemGroup>
 
     <ItemGroup>
-        <!-- Facade-/ref-only-Assemblies, die nie mit ausgeliefert werden duerfen -->
         <NonDeployable Include="Microsoft.Win32.Registry" />
         <NonDeployable Include="System.IO" />
         <NonDeployable Include="System.Runtime" />

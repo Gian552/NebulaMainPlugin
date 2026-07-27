@@ -44,7 +44,6 @@ namespace NebMainPluginLabApi
 
             if (string.Equals(cmd.Command, "st", StringComparison.OrdinalIgnoreCase) || cmd.Aliases?.Any(a => a.Equals("st", StringComparison.OrdinalIgnoreCase)) == true)
             {
-                // Sender ist ein CommandSender - bei Server-Konsole/RA ohne Spieler gibt es keinen Player.
                 if (!Player.TryGet(ev.Sender, out var player))
                     return;
 
@@ -61,7 +60,6 @@ namespace NebMainPluginLabApi
 
         private static void OnBanned(PlayerBannedEventArgs ev)
         {
-            // Offline-Bans laufen nur über die UserId, dort gibt es keinen Player.
             if (ev.Player == null)
                 return;
 

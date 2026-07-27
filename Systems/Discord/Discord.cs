@@ -23,8 +23,6 @@ namespace NebMainPluginLabApi.Systems.Discord
 
         public static void Enable()
         {
-            // Ohne konfigurierten Webhook nichts sammeln - sonst waechst msg unbegrenzt
-            // und der Sende-Loop spammt alle paar Sekunden "Webhook not valid".
             string webhook = Main.Instance?.WebHookLogs;
             if (string.IsNullOrEmpty(webhook) || !webhook.StartsWith("https"))
             {

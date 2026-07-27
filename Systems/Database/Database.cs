@@ -24,10 +24,6 @@ namespace NebMainPluginLabApi.Systems.Database
         public static PlayerData Get(string id)
             => Data.TryGetValue(id, out var result) ? result : null;
 
-        /// <summary>
-        /// Wie Get, legt aber einen frischen Eintrag an wenn der Spieler noch nicht im Cache ist.
-        /// Verhindert NullReferenceExceptions in allen Stellen die das Ergebnis direkt beschreiben.
-        /// </summary>
         public static PlayerData GetOrCreate(string id)
             => Data.GetOrAdd(id, key => new PlayerData { Id = key });
 
@@ -128,7 +124,6 @@ namespace NebMainPluginLabApi.Systems.Database
 
             try
             {
-                // Blockierend: _collection wird unten genullt, die Saves muessen vorher durch sein.
                 SaveAllDataToDatabase().GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -611,10 +606,6 @@ namespace NebMainPluginLabApi.Systems.Database
             return false;
         }
 
-        /// <summary>
-        /// Aktualisiert Nickname und Spielzeit im Cache (synchron, ohne DB-Zugriff).
-        /// </summary>
-        /// <returns>Der Cache-Eintrag, oder null bei DoNotTrack.</returns>
         private static PlayerData UpdateCachedData(Player player)
         {
             if (player.DoNotTrack)
@@ -736,8 +727,6 @@ namespace NebMainPluginLabApi.Systems.Database
                 return;
 
             UpdateDataAsync(ev.Player);
-            // SessionVariables nur beim Verlassen aufraeumen - beim Rundenende wuerde
-            // das die JoinTime loeschen und Spielzeit bis zum Leave verloren gehen.
             SessionVariables.Clear(ev.Player);
         }
 

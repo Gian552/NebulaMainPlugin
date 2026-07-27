@@ -52,8 +52,6 @@ namespace NebMainPluginLabApi.Commands
                             return false;
                         }
 
-                        // $"" + String.Format gemischt: {0}/{1} wurden als Interpolation
-                        // gefressen und die Ausgabe war literal "Playtime of 0: 1"
                         response = $"<color=green>Playtime of {arguments.At(0)}:</color> {TimeSpan.FromSeconds(info.Playtime ?? 0):hh\\:mm\\:ss}";
                         return true;
 

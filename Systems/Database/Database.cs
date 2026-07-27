@@ -647,6 +647,11 @@ namespace NebMainPluginLabApi.Systems.Database
                 return true;
             }
 
+            // Entspricht einem automatischen hidetag + showtag: erst die alte Gruppe
+            // wegnehmen, damit SCP:SL den Badge sauber neu an den Client schickt.
+            if (wasVisible)
+                player.ReferenceHub.serverRoles.SetGroup(null, false, true);
+
             if (!ApplyDiscordRole(player, data, forceDisplay: wasVisible))
                 return false;
 

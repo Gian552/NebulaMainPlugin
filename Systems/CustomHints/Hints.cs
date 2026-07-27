@@ -6,6 +6,7 @@ using System.Text;
 using LabApi.Features.Wrappers;
 using NebMainPluginLabApi;
 using NebMainPluginLabApi.API;
+using NebMainPluginLabApi.Systems.Database;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl.NetworkMessages;
 using PlayerRoles.PlayableScps.Scp079;
@@ -14,6 +15,7 @@ using PlayerStatsSystem;
 using RueI.API;
 using RueI.API.Elements;
 using RueI.API.Elements.Enums;
+using UnityEngine;
 using Player = LabApi.Features.Wrappers.Player;
 using Server = LabApi.Features.Wrappers.Server;
 namespace NebMainPluginLabApi.Systems.CustomHints{
@@ -25,6 +27,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
         private static readonly Tag TpsTag = new("hud_tps");
         private static readonly Tag RoundTimeTag = new("hud_roundtime");
         private static readonly Tag ServerName = new("hud_servername");
+        private static readonly Tag PatchNotes = new("hud_patchnotes");
         
         private static readonly Tag Killcounter = new("hud_kills");
         private static readonly Tag PlayerRole = new("hud_playerrole"); 
@@ -120,6 +123,31 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
             };
             RueDisplay.Get(player).Show(RoundTimeTag, element);
 
+        }
+
+        public static void RefreshPatchNotes(Player player)
+        {
+            if (player == null) return;
+            if (player.Role != RoleTypeId.None)
+            {
+                var emptyElement = new BasicElement(position: 800, content:string.Empty);
+                RueDisplay.Get(player).Show(PatchNotes, emptyElement);
+                return;
+            }
+            RueDisplay display = RueDisplay.Get(player);
+            
+            var lines = Main.Instance.PatchNotes.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                lines[i] = "<space=-275>" + lines[i];
+            }
+            string patchNotes = string.Join("\n", lines);
+            if (Main.Instance.PatchNotes == string.Empty)
+            {
+                return;
+            }
+            var element = new BasicElement(position: 800, content: $"<align=left><space=-275><size=25><color=#1467e3>📄Patchnotes:\n</color></size><size=20>{patchNotes}</size>");
+            RueDisplay.Get(player).Show(PatchNotes,element);
         }
 
         public static void RefreshKills(Player player)

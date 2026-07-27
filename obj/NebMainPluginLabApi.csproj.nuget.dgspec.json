@@ -14,9 +14,8 @@
         "outputPath": "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/obj/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
-          "/home/gian/.nuget/NuGet/NuGet.Config"
+          "/home/gian/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net48"
@@ -26,14 +25,14 @@
         },
         "frameworks": {
           "net48": {
-            "framework": "net48",
+            "targetAlias": "net48",
             "projectReferences": {}
           }
         }
       },
       "frameworks": {
         "net48": {
-          "framework": "net48",
+          "targetAlias": "net48",
           "dependencies": {
             "Discord.Net.Core": {
               "target": "Package",
@@ -58,6 +57,10 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.6.0, )"
+            },
+            "NLayer": {
+              "target": "Package",
+              "version": "[1.16.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

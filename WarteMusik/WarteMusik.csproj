@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <AssemblyName>WarteMusik</AssemblyName>
+    <RootNamespace>WarteMusik</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>Gian</Authors>
+    <Description>Plays MP3 waiting music in the SCP:SL lobby.</Description>
+
+    <!-- LabAPI plugins are loaded as plain DLLs; don't copy game deps into output. -->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+
+    <!-- Local copy of the dedicated server's managed assemblies. -->
+    <LibsDir>$(MSBuildProjectDirectory)\..\libs</LibsDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- net48 reference assemblies (restored from NuGet; build-time only). -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+
+    <!-- Pure managed MP3 decoder. Has to be shipped alongside the plugin,
+         see README ("dependencies" folder). -->
+    <PackageReference Include="NLayer" Version="1.16.0" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <!-- NuGet deps are not copied automatically (CopyLocalLockFileAssemblies=false),
+       so NLayer.dll is placed into the output folder by hand. -->
+  <ItemGroup>
+    <None Include="$(PkgNLayer)\lib\netstandard2.0\NLayer.dll"
+          Condition="'$(PkgNLayer)' != ''"
+          CopyToOutputDirectory="PreserveNewest"
+          Visible="false" />
+  </ItemGroup>
+
+  <!-- Game assemblies, referenced straight from ../libs (matches server version). -->
+  <ItemGroup>
+    <Reference Include="LabApi">
+      <HintPath>$(LibsDir)\LabApi.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(LibsDir)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>$(LibsDir)\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mirror">
+      <HintPath>$(LibsDir)\Mirror.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="NorthwoodLib">
+      <HintPath>$(LibsDir)\NorthwoodLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>$(LibsDir)\YamlDotNet.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(LibsDir)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(LibsDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

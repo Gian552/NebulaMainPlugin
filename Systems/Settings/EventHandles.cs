@@ -27,23 +27,50 @@ namespace NebMainPluginLabApi.Systems.CustomSettings
             SSDropdownSetting.DropdownEntryType.Regular,
             $"Wenn du SCP bist, kannst du hier in den ersten {Main.Instance.ScpSwapTimeout} Sekunden dein SCP tauschen, solange es noch niemand anderes hat.");
 
+        /// <summary>
+        /// Mute toggle for the lobby music.
+        /// </summary>
+        internal static readonly SSTwoButtonsSetting MusicMute = new SSTwoButtonsSetting(
+            23,
+            "WarteMusik",
+            "An",
+            "Stumm",
+            false,
+            "Schaltet die Musik in der Warte-Lobby für dich stumm.");
+
+        /// <summary>
+        /// Volume slider for the lobby music.
+        /// </summary>
+        internal static readonly SSSliderSetting MusicVolume = new SSSliderSetting(
+            24,
+            "WarteMusik Lautstärke",
+            0f,
+            100f,
+            100f,
+            true,
+            "0",
+            "{0}%",
+            "Wie laut die Musik in der Warte-Lobby für dich ist.");
+
         internal static void Enable()
         {
             ServerSpecificSettingsSync.DefinedSettings =
                 (ServerSpecificSettingsSync.DefinedSettings ?? new ServerSpecificSettingBase[0])
-                .Concat(new ServerSpecificSettingBase[] { Header, ScpSwap })
+                .Concat(new ServerSpecificSettingBase[] { Header, ScpSwap, MusicMute, MusicVolume })
                 .ToArray();
 
             ServerSpecificSettingsSync.SendToAll();
             ServerSpecificSettingsSync.ServerOnSettingValueReceived += Actions.ScpSwapMenu;
+            ServerSpecificSettingsSync.ServerOnSettingValueReceived += Actions.WarteMusikSettings;
         }
 
         internal static void Disable()
         {
             ServerSpecificSettingsSync.ServerOnSettingValueReceived -= Actions.ScpSwapMenu;
+            ServerSpecificSettingsSync.ServerOnSettingValueReceived -= Actions.WarteMusikSettings;
 
             ServerSpecificSettingsSync.DefinedSettings = ServerSpecificSettingsSync.DefinedSettings?
-                .Where(s => s != Header && s != ScpSwap)
+                .Where(s => s != Header && s != ScpSwap && s != MusicMute && s != MusicVolume)
                 .ToArray();
 
             ServerSpecificSettingsSync.SendToAll();

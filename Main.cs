@@ -13,6 +13,7 @@ using NebMainPluginLabApi.Systems.Discord;
 using NebMainPluginLabApi.Systems.Events.ADHSL;
 using NebMainPluginLabApi.Systems.RemoteKeycard;
 using NebMainPluginLabApi.Systems.SpawnProtection;
+using NebMainPluginLabApi.Systems.WarteMusik;
 
 namespace NebMainPluginLabApi
 {
@@ -72,6 +73,9 @@ namespace NebMainPluginLabApi
             
             Logger.Info("Enabling Custom Hud");
             Systems.CustomHints.EventHandlers.Enable();
+
+            Logger.Info("Enabling WarteMusik...");
+            WarteMusik.Enable();
         }
 
         public override void Disable()
@@ -108,6 +112,9 @@ namespace NebMainPluginLabApi
             
             Logger.Info("Disabling Custom Hud");
             Systems.CustomHints.EventHandlers.Disable();
+
+            Logger.Info("Disabling WarteMusik...");
+            WarteMusik.Disable();
         }
     }
 }

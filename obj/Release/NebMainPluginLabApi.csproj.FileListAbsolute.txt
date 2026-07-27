@@ -48,3 +48,4 @@
 /home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/bin/Release/YamlDotNet.dll
 /home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/bin/Release/ZstdSharp.dll
 /home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/obj/Release/NebMainPluginLabApi.csproj.CopyComplete
+/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/bin/Release/NLayer.dll

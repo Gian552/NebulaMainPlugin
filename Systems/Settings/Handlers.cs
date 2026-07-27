@@ -11,6 +11,25 @@ namespace NebMainPluginLabApi.Systems.CustomSettings
 {
     internal static class Actions
     {
+        internal static void WarteMusikSettings(ReferenceHub hub, ServerSpecificSettingBase setting)
+        {
+            try
+            {
+                Player p = Player.Get(hub);
+                if (p == null)
+                    return;
+
+                if (setting is SSTwoButtonsSetting twoButtons && setting.SettingId == EventHandles.MusicMute.SettingId)
+                    Systems.WarteMusik.WarteMusik.SetMuted(p, twoButtons.SyncIsB);
+                else if (setting is SSSliderSetting slider && setting.SettingId == EventHandles.MusicVolume.SettingId)
+                    Systems.WarteMusik.WarteMusik.SetVolume(p, slider.SyncFloatValue);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Error in WarteMusik Settings:\n" + e.Message);
+            }
+        }
+
         // Previous test button
         //internal static void ButtonPress(Player p, SettingBase s)
         //{

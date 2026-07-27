@@ -141,9 +141,41 @@ namespace NebMainPluginLabApi
         public bool Stop173 { get; set; } = true;
                 
         /// <summary>
-        ///     Whether ADHSL is enabled or not 
+        ///     Whether ADHSL is enabled or not
         /// </summary>
         [Description("Is ADHSL enabled?")]
         public bool IsADHSLEnabled { get; set; } = false;
+
+        //WarteMusik Configs
+        /// <summary>
+        ///     Whether music is played during the waiting lobby.
+        /// </summary>
+        [Description("Ob in der Lobby (Warten auf Spieler) Musik abgespielt wird.")]
+        public bool WarteMusikEnabled { get; set; } = true;
+        /// <summary>
+        ///     The folder containing the music files. A random track is picked each lobby.
+        /// </summary>
+        [Description("Der Ordner mit den Musik-Dateien (.wav oder .mp3). Pro Lobby wird ein zufälliger Track gespielt. Relative Pfade werden relativ zum LabAPI-Config-Ordner aufgelöst.")]
+        public string WarteMusikFolder { get; set; } = "Music";
+        /// <summary>
+        ///     Master playback volume between 0 and 1. The per-player slider scales this.
+        /// </summary>
+        [Description("Maximale Lautstärke der WarteMusik (0.0 bis 1.0). Der Regler in den Einstellungen skaliert diesen Wert.")]
+        public float WarteMusikVolume { get; set; } = 0.5f;
+        /// <summary>
+        ///     Number of selectable volume levels. Each level costs one audio stream.
+        /// </summary>
+        [Description("Anzahl der wählbaren Lautstärke-Stufen. Jede Stufe kostet einen zusätzlichen Audio-Stream (CPU), 4 ist ein guter Kompromiss.")]
+        public int WarteMusikVolumeSteps { get; set; } = 4;
+        /// <summary>
+        ///     Base controller id for the speakers. Raise this if it clashes with another plugin.
+        /// </summary>
+        [Description("Basis-ControllerId der Lautsprecher. Nur ändern, wenn ein anderes Plugin dieselben IDs benutzt.")]
+        public byte WarteMusikControllerId { get; set; } = 200;
+        /// <summary>
+        ///     Whether the music loops until the round starts.
+        /// </summary>
+        [Description("Ob die Musik geloopt wird, bis die Runde startet.")]
+        public bool WarteMusikLoop { get; set; } = true;
     }
 }

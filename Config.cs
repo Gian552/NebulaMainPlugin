@@ -146,6 +146,8 @@ namespace NebMainPluginLabApi
         [Description("Is ADHSL enabled?")]
         public bool IsADHSLEnabled { get; set; } = false;
 
+        public bool IsAutoFFEnabled { get; set; } = true;
+        
         [Description("Ob in der Lobby (Warten auf Spieler) Musik abgespielt wird.")]
         public bool WarteMusikEnabled { get; set; } = true;
 

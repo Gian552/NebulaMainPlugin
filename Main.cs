@@ -7,6 +7,7 @@ using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
 using NebMainPluginLabApi;
+using NebMainPluginLabApi.Systems.AutoFF;
 using NebMainPluginLabApi.Systems.Database;
 using NebMainPluginLabApi.Systems.Discord;
 using NebMainPluginLabApi.Systems.Events.ADHSL;
@@ -83,6 +84,17 @@ namespace NebMainPluginLabApi
 
             Logger.Info("Enabling WarteMusik...");
             WarteMusik.Enable();
+
+            if (Config.IsAutoFFEnabled == true)
+            {
+                Logger.Info("Enabling AutoFF...");
+                AutoFF.Enable();
+            }
+            else
+            {
+                Logger.Warn("AutoFF is Disabled.");
+            }
+            
         }
 
         public override void Disable()
@@ -122,7 +134,13 @@ namespace NebMainPluginLabApi
 
             Logger.Info("Disabling WarteMusik...");
             WarteMusik.Disable();
-
+            
+            if (Config.IsAutoFFEnabled == true)
+            {
+                Logger.Info("Disabling  AutoFF...");
+                AutoFF.Disable();
+            }
+            
             _harmony?.UnpatchAll(HarmonyId);
             _harmony = null;
         }

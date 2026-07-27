@@ -22,9 +22,10 @@ namespace NebMainPluginLabApi.API
         /// <param name="message"></param>
         public static async Task SendMs(string message)
         {
-            string webhook = Main.Instance.WebHookLogs;
+            string? webhook = Main.Instance?.WebHookLogs;
 
-            if (!webhook.StartsWith("https") || webhook == "")
+            // Erst auf null pruefen - webhook.StartsWith auf null war eine NRE
+            if (webhook is null || !webhook.StartsWith("https"))
             {
                 Logger.Error("Discord Webhook not valid!");
                 return;
@@ -67,13 +68,16 @@ namespace NebMainPluginLabApi.API
         /// <returns></returns>
         public static async Task SendMs(string content, string title, string description, ConcurrentDictionary<string, string>? fields = null)
         {
-            var _WebhookClient = new Discord.Webhook.DiscordWebhookClient(Main.Instance.TeamTimeControllWebhook);
-            string webhook = Main.Instance.TeamTimeControllWebhook;
-            if (!webhook.StartsWith("https") || String.IsNullOrEmpty(webhook))
+            string? webhook = Main.Instance?.TeamTimeControllWebhook;
+
+            // Validierung VOR dem Erstellen des Clients - der Ctor wirft bei ungueltiger URL
+            if (webhook is null || !webhook.StartsWith("https"))
             {
                 Logger.Error("Discord Webhook not valid!");
                 return;
             }
+
+            var _WebhookClient = new Discord.Webhook.DiscordWebhookClient(webhook);
 
             var _footer = new EmbedFooterBuilder()
                 .WithText($"Made By @skorp1.0 • {DateTime.Now}")

@@ -20,13 +20,14 @@ namespace NebMainPluginLabApi.Systems.Discord
 
         internal static void Enable()
         {
+            _cts = new CancellationTokenSource();
             Task.Run(() => TimeCheck(_cts.Token));
         }
 
         internal static void Disable()
         {
-            _cts.Cancel();
-            _cts.Dispose();
+            _cts?.Cancel();
+            _cts?.Dispose();
             _cts = null;
         }
 
@@ -61,7 +62,7 @@ namespace NebMainPluginLabApi.Systems.Discord
             }
         }
 
-        private static async Task UpdateTeamList()
+        private static void UpdateTeamList()
         {
             Teamlers.Clear();
 
@@ -74,13 +75,13 @@ namespace NebMainPluginLabApi.Systems.Discord
 
         internal static async Task<bool> SendWeeklyTeamlerReport(bool command = false)
         {
-            await UpdateTeamList();
+            UpdateTeamList();
 
             ConcurrentDictionary<string, string> TeamEmbed = new();
 
             foreach (PlayerData ply in Teamlers)
             {
-                if (ply.DiscordId.IsEmpty() || ply.DiscordId == null)
+                if (string.IsNullOrEmpty(ply.DiscordId))
                     continue;
 
                 var seconds = (ply.Playtime ?? 0) - (ply.WeekStart ?? 0);

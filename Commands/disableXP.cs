@@ -20,7 +20,8 @@ namespace NebMainPluginLabApi.Commands
         {
             Player player = Player.Get(sender);
 
-            if (player.HasPermission(PlayerPermissions.RoundEvents))
+            // Server-Konsole hat keinen Player - darf den Toggle immer
+            if (player == null || player.HasPermission(PlayerPermissions.RoundEvents))
             {
                 XP.XpSystemEnabled = !XP.XpSystemEnabled;
 

@@ -22,11 +22,17 @@ namespace NebMainPluginLabApi.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
+            if (player == null)
+            {
+                response = "Dieser Befehl kann nur von Spielern verwendet werden.";
+                return false;
+            }
+
             var data = PlayerDataCache.Get(player.UserId);
 
             if (data != null)
             {
-                var ts = TimeSpan.FromSeconds((double)data.Playtime);
+                var ts = TimeSpan.FromSeconds(data.Playtime ?? 0);
 
                 string pt = String.Format("Spielzeit: {0} Stunden, {1} Minuten, {2} Sekunden", (int)ts.TotalHours, ts.Minutes, ts.Seconds);
                 response = $"\n<color=white>[</color>{Main.Instance.serverName}<color=white>]</color>\n<color=white>Deine Stats: </color>\n<color=white>Level: {data.Level}</color>\n<color=white>Xp: {data.XP} / {data.RequiredXP}</color>\n<color=white>{pt}</color>\n<color=white>Rang: </color><color={player.GroupColor}>{data.slRole}</color>";

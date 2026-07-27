@@ -115,12 +115,70 @@
 
 
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
+
+
+    <!-- ===================================================================
+         Deploy-Layout bauen.
+
+         LabAPI laedt NUR die Plugin-DLL aus plugins\ - die NuGet-Abhaengigkeiten
+         muessen separat nach dependencies\ , sonst gibt es beim Enable eine
+         ReflectionTypeLoadException ("Could not load file or assembly
+         'MongoDB.Bson' ...").
+
+         Ergebnis nach dem Build:
+             dist\plugins\global\NebMainPluginLabApi.dll
+             dist\dependencies\global\*.dll
+
+         Nicht deployed werden:
+           - alles was auch in libs\ liegt  -> bringt der Server selbst mit
+           - reine Referenz-/Facade-Assemblies aus alten NuGet-Paketen: die
+             enthalten keinen Code und wuerden die Mono-Laufzeit ueberschreiben
+           - 0Harmony: das Plugin referenziert Harmony nicht, der Server hat es
+         =================================================================== -->
+    <PropertyGroup>
+        <DistDir>dist\</DistDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- RueI ist selbst ein LabAPI-Plugin (macht seine Harmony-Patches in Enable())
+             und muss deshalb nach plugins\, nicht nach dependencies\ -->
+        <PluginAssembly Include="$(AssemblyName)" />
+        <PluginAssembly Include="RueI" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Facade-/ref-only-Assemblies, die nie mit ausgeliefert werden duerfen -->
+        <NonDeployable Include="Microsoft.Win32.Registry" />
+        <NonDeployable Include="System.IO" />
+        <NonDeployable Include="System.Runtime" />
+        <NonDeployable Include="System.Runtime.InteropServices.RuntimeInformation" />
+        <NonDeployable Include="System.Security.AccessControl" />
+        <NonDeployable Include="System.Security.Cryptography.Algorithms" />
+        <NonDeployable Include="System.Security.Cryptography.Encoding" />
+        <NonDeployable Include="System.Security.Cryptography.Primitives" />
+        <NonDeployable Include="System.Security.Cryptography.X509Certificates" />
+        <NonDeployable Include="System.Security.Principal.Windows" />
+        <NonDeployable Include="System.ValueTuple" />
+    </ItemGroup>
+
+    <Target Name="BuildDist" AfterTargets="Build">
+        <ItemGroup>
+            <ServerProvided Include="libs\*.dll" />
+        </ItemGroup>
+        <ItemGroup>
+            <DistDependency Include="$(OutputPath)*.dll" />
+            <DistDependency Remove="@(PluginAssembly->'$(OutputPath)%(Identity).dll')" />
+            <DistDependency Remove="@(ServerProvided->'$(OutputPath)%(Filename).dll')" />
+            <DistDependency Remove="@(NonDeployable->'$(OutputPath)%(Identity).dll')" />
+        </ItemGroup>
+
+        <RemoveDir Directories="$(DistDir)" />
+        <Copy SourceFiles="@(PluginAssembly->'$(OutputPath)%(Identity).dll')"
+              DestinationFolder="$(DistDir)plugins\global" />
+        <Copy SourceFiles="@(DistDependency)"
+              DestinationFolder="$(DistDir)dependencies\global" />
+        <Message Importance="high"
+                 Text="Deploy-Layout: $(DistDir) (@(DistDependency->Count()) Dependencies)" />
     </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
 
 </Project>

@@ -1,22 +1,22 @@
 {
   "format": 1,
   "restore": {
-    "/home/mistert13/Documents/NebMainPlugin/NebMainPluginLabApi.csproj": {}
+    "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/NebMainPluginLabApi.csproj": {}
   },
   "projects": {
-    "/home/mistert13/Documents/NebMainPlugin/NebMainPluginLabApi.csproj": {
+    "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/NebMainPluginLabApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mistert13/Documents/NebMainPlugin/NebMainPluginLabApi.csproj",
+        "projectUniqueName": "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/NebMainPluginLabApi.csproj",
         "projectName": "NebMainPluginLabApi",
-        "projectPath": "/home/mistert13/Documents/NebMainPlugin/NebMainPluginLabApi.csproj",
-        "packagesPath": "/home/mistert13/.nuget/packages/",
-        "outputPath": "/home/mistert13/Documents/NebMainPlugin/obj/",
+        "projectPath": "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/NebMainPluginLabApi.csproj",
+        "packagesPath": "/home/gian/.nuget/packages/",
+        "outputPath": "/home/gian/Schreibtisch/Projekte/SCPSL/Nebula/NebMainPlugin/obj/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
-          "/home/mistert13/.nuget/NuGet/NuGet.Config"
+          "/home/gian/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net48"
@@ -26,17 +26,14 @@
         },
         "frameworks": {
           "net48": {
+            "framework": "net48",
             "projectReferences": {}
           }
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net48": {
+          "framework": "net48",
           "dependencies": {
             "Discord.Net.Core": {
               "target": "Package",
@@ -65,6 +62,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "RueI": {
+              "target": "Package",
+              "version": "[3.1.2, )"
             },
             "System.Buffers": {
               "target": "Package",
@@ -103,6 +104,17 @@
               "version": "[4.5.0, )"
             }
           }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
         }
       }
     }

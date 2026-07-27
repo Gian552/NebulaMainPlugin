@@ -49,7 +49,7 @@ namespace NebMainPluginLabApi.Systems.Database
             if (!XpSystemEnabled)
                 return;
 
-            switch (ev.Item.Type)
+            switch (ev.UsableItem.Type)
             {
                 case ItemType.Medkit:
                     if (ev.Player.Health < ev.Player.MaxHealth)
@@ -106,7 +106,7 @@ namespace NebMainPluginLabApi.Systems.Database
 
         private static void Handle1344Use(PlayerUsedItemEventArgs ev)
         {
-            if (ev.Item.Type == ItemType.SCP1344)
+            if (ev.UsableItem.Type == ItemType.SCP1344)
                 Database.UpdateReconsAndXP(ev.Player, 20);
         }
 

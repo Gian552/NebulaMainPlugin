@@ -19,8 +19,20 @@ namespace NebMainPluginLabApi.Systems.Discord
     public static class Loggs
     {
         private static CancellationTokenSource _cts;
+        private static bool _enabled;
+
         public static void Enable()
         {
+            // Ohne konfigurierten Webhook nichts sammeln - sonst waechst msg unbegrenzt
+            // und der Sende-Loop spammt alle paar Sekunden "Webhook not valid".
+            string webhook = Main.Instance?.WebHookLogs;
+            if (string.IsNullOrEmpty(webhook) || !webhook.StartsWith("https"))
+            {
+                Logger.Warn("Kein gueltiger WebHookLogs-Link in der Config - Discord-Logs bleiben deaktiviert.");
+                return;
+            }
+
+            _enabled = true;
             ServerEvents.RoundStarted += OnRoundStarted;
             ServerEvents.RoundEnded += OnRoundEnded;
             PlayerEvents.Joined += OnJoined;
@@ -38,6 +50,10 @@ namespace NebMainPluginLabApi.Systems.Discord
 
         public static void Disable()
         {
+            if (!_enabled)
+                return;
+
+            _enabled = false;
             ServerEvents.RoundStarted -= OnRoundStarted;
             ServerEvents.RoundEnded -= OnRoundEnded;
             PlayerEvents.Joined -= OnJoined;

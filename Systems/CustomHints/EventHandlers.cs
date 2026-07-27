@@ -66,7 +66,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
             {
                 foreach (var scp106 in Player.List.Where(pl => pl.Role == RoleTypeId.Scp106))
                 {
-                    AddKill(ev.Player);
+                    AddKill(scp106);
                 }
             }
 
@@ -100,6 +100,7 @@ namespace NebMainPluginLabApi.Systems.CustomHints{
 
         private static void OnRoundRestart()
         {
+            Kills.Clear();
             Hints.playerHints.Clear();
         }
     }

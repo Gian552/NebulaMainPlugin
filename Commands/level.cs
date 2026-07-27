@@ -31,7 +31,7 @@ namespace NebMainPluginLabApi.Commands
                     if (info == null)
                         continue;
 
-                    response += $"<color=yellow>{p.Nickname}</color> - {TimeSpan.FromSeconds((double)info.Playtime):hh\\:mm\\:ss}\n";
+                    response += $"<color=yellow>{p.Nickname}</color> - {TimeSpan.FromSeconds(info.Playtime ?? 0):hh\\:mm\\:ss}\n";
                 }
 
                 return true;
@@ -52,7 +52,9 @@ namespace NebMainPluginLabApi.Commands
                             return false;
                         }
 
-                        response = String.Format($"<color=green>Playtime of {0}:</color> {1}", arguments.At(0), $"{TimeSpan.FromSeconds((double)info.Playtime):hh\\:mm\\:ss}");
+                        // $"" + String.Format gemischt: {0}/{1} wurden als Interpolation
+                        // gefressen und die Ausgabe war literal "Playtime of 0: 1"
+                        response = $"<color=green>Playtime of {arguments.At(0)}:</color> {TimeSpan.FromSeconds(info.Playtime ?? 0):hh\\:mm\\:ss}";
                         return true;
 
                     }
@@ -64,7 +66,7 @@ namespace NebMainPluginLabApi.Commands
                         return false;
                     }
 
-                    response = String.Format($"<color=green>Playtime of {0}:</color> {1}", p.Nickname, $"{TimeSpan.FromSeconds((double)info.Playtime):hh\\:mm\\:ss}");
+                    response = $"<color=green>Playtime of {p.Nickname}:</color> {TimeSpan.FromSeconds(info.Playtime ?? 0):hh\\:mm\\:ss}";
                     return true;
                 }
                 catch (Exception e)

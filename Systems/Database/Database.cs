@@ -24,6 +24,13 @@ namespace NebMainPluginLabApi.Systems.Database
         public static PlayerData Get(string id)
             => Data.TryGetValue(id, out var result) ? result : null;
 
+        /// <summary>
+        /// Wie Get, legt aber einen frischen Eintrag an wenn der Spieler noch nicht im Cache ist.
+        /// Verhindert NullReferenceExceptions in allen Stellen die das Ergebnis direkt beschreiben.
+        /// </summary>
+        public static PlayerData GetOrCreate(string id)
+            => Data.GetOrAdd(id, key => new PlayerData { Id = key });
+
         public static void Set(string id, PlayerData playerData)
             => Data[id] = playerData;
     }
@@ -116,11 +123,19 @@ namespace NebMainPluginLabApi.Systems.Database
 
             foreach (var p in Player.List)
             {
-                UpdateDataAsync(p);
+                UpdateCachedData(p);
             }
 
-            SaveAllDataToDatabase();
-            
+            try
+            {
+                // Blockierend: _collection wird unten genullt, die Saves muessen vorher durch sein.
+                SaveAllDataToDatabase().GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error while saving player data on shutdown: {ex}");
+            }
+
             PlayerEvents.Left -= OnPlayerLeft;
             ServerEvents.RoundEnded -= OnRoundEnded;
             PlayerEvents.Joined -= OnJoined;
@@ -236,7 +251,10 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="xp"></param>
         public static void UpdateReconsAndXP(Player player, int xp = 0, bool ShowHint = true)
         {
-            var data = PlayerDataCache.Get(player.UserId);
+            if (player.DoNotTrack)
+                return;
+
+            var data = PlayerDataCache.GetOrCreate(player.UserId);
             if (xp != 0)
                 data.XP += xp;
 
@@ -255,7 +273,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="state"></param>
         public static void UpdateAllowNickChange(Player player, bool state)
         {
-            var data = PlayerDataCache.Get(player.UserId);
+            var data = PlayerDataCache.GetOrCreate(player.UserId);
             data.NicknameChangable = state;
 
             PlayerDataCache.Set(player.UserId, data);
@@ -267,7 +285,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="player"></param>
         public static void UpdateCustomNick(Player player)
         {
-            var data = PlayerDataCache.Get(player.UserId);
+            var data = PlayerDataCache.GetOrCreate(player.UserId);
             data.CustomNick = player.DisplayName;
 
             PlayerDataCache.Set(player.UserId, data);
@@ -279,7 +297,10 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="player"></param>
         public static void AddKill(Player player)
         {
-            var data = PlayerDataCache.Get(player.UserId);
+            if (player.DoNotTrack)
+                return;
+
+            var data = PlayerDataCache.GetOrCreate(player.UserId);
             data.Kills++;
 
             PlayerDataCache.Set(player.UserId, data);
@@ -291,7 +312,10 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="player"></param>
         public static void AddDeath(Player player)
         {
-            var data = PlayerDataCache.Get(player.UserId);
+            if (player.DoNotTrack)
+                return;
+
+            var data = PlayerDataCache.GetOrCreate(player.UserId);
             data.Deaths++;
 
             PlayerDataCache.Set(player.UserId, data);
@@ -305,7 +329,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="reson"></param>
         public static void AddBan(Player target, Player issuer, string reson, long Duration)
         {
-            var data = PlayerDataCache.Get(target.UserId);
+            var data = PlayerDataCache.GetOrCreate(target.UserId);
 
             if (data.Bans == null)
                 data.Bans = new List<Ban>();
@@ -351,7 +375,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="reson"></param>
         public static void AddWarn(Player target, Player issuer, string reson)
         {
-            var data = PlayerDataCache.Get(target.UserId);
+            var data = PlayerDataCache.GetOrCreate(target.UserId);
 
             if (data.Warns == null)
                 data.Warns = new List<Warn>();
@@ -395,8 +419,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <returns></returns>
         public static bool RemoveWarn(PlayerData data, ObjectId warn)
         {
-            var TestWarn = data.Warns.FirstOrDefault(w => w.Id == warn);
-            if (data.Warns.IsEmpty() || data.Warns == null || TestWarn == null)
+            if (data?.Warns == null || data.Warns.All(w => w.Id != warn))
             {
                 return false;
             }
@@ -404,6 +427,7 @@ namespace NebMainPluginLabApi.Systems.Database
             try
             {
                 data.Warns.RemoveAll(w => w.Id == warn);
+                PlayerDataCache.Set(data.Id, data);
             }
             catch
             {
@@ -420,9 +444,9 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <returns>A Task<Lsit<Warn>> with all warns of the specified UserId</returns>
         public static async Task<List<Warn>> ListWarns(string steamID)
         {
-            PlayerData data = await _collection.Find(steamID).FirstOrDefaultAsync();
+            PlayerData data = await _collection.Find(p => p.Id == steamID).FirstOrDefaultAsync();
 
-            return data == null ? new List<Warn>() : data.Warns;
+            return data?.Warns ?? new List<Warn>();
         }
 
         /// <summary>
@@ -433,7 +457,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <param name="reson"></param>
         public static void AddWatchlist(Player target, Player issuer, string reson)
         {
-            var data = PlayerDataCache.Get(target.UserId);
+            var data = PlayerDataCache.GetOrCreate(target.UserId);
 
             if (data.Watchlists == null)
                 data.Watchlists = new List<Warn>();
@@ -477,9 +501,7 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <returns>If the Watchlist entry was removed Succesfully</returns>
         public static bool RemoveWatchlist(PlayerData data, ObjectId watchlist)
         {
-            var TestWatchlists = data.Watchlists.FirstOrDefault(w => w.Id == watchlist);
-
-            if (data.Watchlists.IsEmpty() || data.Watchlists == null || TestWatchlists == null)
+            if (data?.Watchlists == null || data.Watchlists.All(w => w.Id != watchlist))
             {
                 return false;
             }
@@ -505,9 +527,9 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <returns>A Task<Lsit<Warn>> with all watchlists of the specified UserId</returns>
         public static async Task<List<Warn>> ListWatchlist(string steamID)
         {
-            PlayerData data = await _collection.Find(steamID).FirstOrDefaultAsync();
+            PlayerData data = await _collection.Find(p => p.Id == steamID).FirstOrDefaultAsync();
 
-            return data == null ? new List<Warn>() : data.Warns;
+            return data?.Watchlists ?? new List<Warn>();
         }
 
         /// <summary>
@@ -545,7 +567,10 @@ namespace NebMainPluginLabApi.Systems.Database
         {
             var data = PlayerDataCache.Get(ply.UserId);
 
-            if (data.dcRole != Roles.DiscordRoles.None || data.dcRole != 0 && data.dcRoles.Contains(data.dcRole))
+            if (data == null)
+                return false;
+
+            if (data.dcRole != Roles.DiscordRoles.None && data.dcRoles != null && data.dcRoles.Contains(data.dcRole))
             {
                 Logger.Debug($"{data.Nickname} has a discord role ({data.dcRole.ToRoleString()}), trying to set it ingame now...");
 
@@ -586,14 +611,16 @@ namespace NebMainPluginLabApi.Systems.Database
             return false;
         }
 
-        internal static async void UpdateDataAsync(Player player)
+        /// <summary>
+        /// Aktualisiert Nickname und Spielzeit im Cache (synchron, ohne DB-Zugriff).
+        /// </summary>
+        /// <returns>Der Cache-Eintrag, oder null bei DoNotTrack.</returns>
+        private static PlayerData UpdateCachedData(Player player)
         {
             if (player.DoNotTrack)
-                return;
-            
-            var data = PlayerDataCache.Get(player.UserId);
+                return null;
 
-            data.Id = player.UserId; // Just in case
+            var data = PlayerDataCache.GetOrCreate(player.UserId);
             data.Nickname = player.Nickname;
 
             if (data.Playtime == null)
@@ -603,8 +630,17 @@ namespace NebMainPluginLabApi.Systems.Database
                 data.Playtime += (DateTime.Now - DateTime.FromBinary((long)SessionVariables.Get(player)["JoinTime"])).TotalSeconds;
                 SessionVariables.Set(player, "JoinTime", DateTime.Now.ToBinary());
             }
+
+            return data;
+        }
+
+        internal static async void UpdateDataAsync(Player player)
+        {
+            var data = UpdateCachedData(player);
+            if (data == null)
+                return;
+
             await SavePlayerDataPartialAsync(data);
-            SessionVariables.Clear(player);
         }
 
         internal static async void UpdateDataAsync(PlayerData data)
@@ -698,20 +734,28 @@ namespace NebMainPluginLabApi.Systems.Database
         {
             if (ev.Player.DoNotTrack)
                 return;
-            
+
             UpdateDataAsync(ev.Player);
+            // SessionVariables nur beim Verlassen aufraeumen - beim Rundenende wuerde
+            // das die JoinTime loeschen und Spielzeit bis zum Leave verloren gehen.
+            SessionVariables.Clear(ev.Player);
         }
 
-        private static void OnRoundEnded(RoundEndedEventArgs ev)
+        private static async void OnRoundEnded(RoundEndedEventArgs ev)
         {
             foreach (var p in Player.List)
             {
-                if (p.DoNotTrack)
-                    continue;
-                
-                UpdateDataAsync(p);
+                UpdateCachedData(p);
             }
-            SaveAllDataToDatabase();
+
+            try
+            {
+                await SaveAllDataToDatabase();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error while saving player data on round end: {ex}");
+            }
         }
     }
 }

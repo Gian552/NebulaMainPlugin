@@ -45,11 +45,12 @@ namespace NebMainPluginLabApi.Systems.RemoteKeycard
                     return;
 
                 Logger.Debug(
-                    $"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.Permissions)}, Current Item: ${ev.Player.CurrentItem}");
+                    $"Allowed: {ev.IsAllowed}, CanOpen: {ev.CanOpen}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.Permissions)}, Current Item: ${ev.Player.CurrentItem}");
 
-                if (!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.Permissions) &&
+                // CanOpen traegt das Ergebnis der Vanilla-Keycard-Pruefung (IsAllowed ist nur das Cancel-Flag)
+                if (ev.IsAllowed && !ev.CanOpen && ev.Player.HasKeycardPermission(ev.Door.Permissions) &&
                     !ev.Door.IsLocked)
-                    ev.IsAllowed = true;
+                    ev.CanOpen = true;
             }
             catch (Exception e)
             {
@@ -88,10 +89,10 @@ namespace NebMainPluginLabApi.Systems.RemoteKeycard
                     return;
 
                 Logger.Debug(
-                    $"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Generator.RequiredPermissions)}");
+                    $"Allowed: {ev.IsAllowed}, CanOpen: {ev.CanOpen}, Permission?: {ev.Player.HasKeycardPermission(ev.Generator.RequiredPermissions)}");
 
-                if (!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.RequiredPermissions))
-                    ev.IsAllowed = true;
+                if (ev.IsAllowed && !ev.CanOpen && ev.Player.HasKeycardPermission(ev.Generator.RequiredPermissions))
+                    ev.CanOpen = true;
             }
             catch (Exception e)
             {
@@ -108,12 +109,15 @@ namespace NebMainPluginLabApi.Systems.RemoteKeycard
                 if (!_config.AffectScpLockers)
                     return;
 
-                Logger.Debug(
-                    $"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true)}");
+                if (ev.Chamber == null)
+                    return;
 
-                if (!ev.IsAllowed && ev.Chamber != null &&
+                Logger.Debug(
+                    $"Allowed: {ev.IsAllowed}, CanOpen: {ev.CanOpen}, Permission?: {ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true)}");
+
+                if (ev.IsAllowed && !ev.CanOpen &&
                     ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true))
-                    ev.IsAllowed = true;
+                    ev.CanOpen = true;
             }
             catch (Exception e)
             {

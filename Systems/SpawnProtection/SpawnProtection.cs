@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace NebMainPluginLabApi.Systems.SpawnProtection
 {
-    public class SpawnProtection
+    public static class SpawnProtection
     {
         public static bool IsProtectionEnabled = Main.Instance.IsProtectionEnabled;
         public static void Enable()

@@ -560,50 +560,105 @@ namespace NebMainPluginLabApi.Systems.Database
         /// <returns><see langword="true"/> if the player's rank was successfully updated; otherwise, <see langword="false"/>.</returns>
         public static bool UpdatePlayerRank(Player ply)
         {
+            if (ply?.UserId == null)
+                return false;
+
             var data = PlayerDataCache.Get(ply.UserId);
 
             if (data == null)
                 return false;
 
-            if (data.dcRole != Roles.DiscordRoles.None && data.dcRoles != null && data.dcRoles.Contains(data.dcRole))
+            return ApplyDiscordRole(ply, data);
+        }
+
+        /// <summary>
+        /// Returns every role the player is allowed to display, ordered by category.
+        /// </summary>
+        internal static List<Roles.DiscordRoles> GetSelectableRoles(Player player)
+        {
+            var result = new List<Roles.DiscordRoles>();
+
+            if (player?.UserId == null)
+                return result;
+
+            var data = PlayerDataCache.Get(player.UserId);
+            if (data?.dcRoles == null)
+                return result;
+
+            foreach (var role in data.dcRoles)
             {
-                Logger.Debug($"{data.Nickname} has a discord role ({data.dcRole.ToRoleString()}), trying to set it ingame now...");
+                if (role == Roles.DiscordRoles.None || result.Contains(role))
+                    continue;
 
-                try
-                {
-                    PermissionRegistry.RoleInfo RankData;
-                    PermissionRegistry.TryGetRoleInfo(data.dcRole, out RankData);
-
-                    if (RankData == null)
-                        throw new NullReferenceException("RankData is Null");
-
-                    Logger.Debug($"Rank data will be: {RankData.DisplayName}");
-
-                    UserGroup group = new()
-                    {
-                        Name = RankData.InternalName,
-                        BadgeColor = RankData.Color,
-                        BadgeText = RankData.DisplayName,
-                        Permissions = RankData.Permissions,
-                        Cover = data.dcRole.ToRoleString() == "Team" ? true : false,
-                        HiddenByDefault = data.dcRole.ToRoleString() == "Team" ? true : false,
-                        Shared = false,
-                        KickPower = RankData.KickPower,
-                        RequiredKickPower = RankData.RequiredKickPower
-                    };
-
-                    Logger.Debug($"Trying to set rank for {data.Nickname} to {group.Name}");
-                    ply.UserGroup = group;
-                    Logger.Debug($"Rank for {data.Nickname} is now: {ply.GroupName}");
-                    return ply.GroupName == group.Name;
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error($"Error while setting rank for {data.Nickname}: {ex.StackTrace}\n{ex.Data}");
-                    return false;
-                }
+                if (PermissionRegistry.Roles.ContainsKey(role))
+                    result.Add(role);
             }
-            return false;
+
+            return result
+                .OrderBy(r => CategoryOrder(r.GetDiscordRoleType()))
+                .ThenBy(r => r.ToRoleString())
+                .ToList();
+        }
+
+        private static int CategoryOrder(string category)
+        {
+            switch (category)
+            {
+                case "Team": return 0;
+                case "Rewards": return 1;
+                case "Cosmetic": return 2;
+                case "Playtime": return 3;
+                default: return 4;
+            }
+        }
+
+        /// <summary>
+        /// Stores the role the player picked and applies it immediately.
+        /// </summary>
+        internal static bool SetSelectedRole(Player player, Roles.DiscordRoles role)
+        {
+            if (player?.UserId == null)
+                return false;
+
+            var data = PlayerDataCache.Get(player.UserId);
+            if (data == null)
+                return false;
+
+            if (role != Roles.DiscordRoles.None && (data.dcRoles == null || !data.dcRoles.Contains(role)))
+            {
+                Logger.Warn($"{player.Nickname} tried to select role {role} without owning it.");
+                return false;
+            }
+
+            data.dcRole = role;
+            PlayerDataCache.Set(player.UserId, data);
+            SaveSelectedRoleAsync(data);
+
+            if (role == Roles.DiscordRoles.None)
+            {
+                player.ReferenceHub.serverRoles.SetGroup(null, false, true);
+                return true;
+            }
+
+            return ApplyDiscordRole(player, data);
+        }
+
+        private static async void SaveSelectedRoleAsync(PlayerData data)
+        {
+            if (_collection == null)
+                return;
+
+            try
+            {
+                var filter = Builders<PlayerData>.Filter.Eq(p => p.Id, data.Id);
+                var update = Builders<PlayerData>.Update.Set(p => p.dcRole, data.dcRole);
+
+                await _collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error while saving selected role for {data.Id}: {ex.Message}");
+            }
         }
 
         private static PlayerData UpdateCachedData(Player player)
@@ -659,6 +714,12 @@ namespace NebMainPluginLabApi.Systems.Database
 
             SessionVariables.Set(player, "JoinTime", DateTime.Now.ToBinary());
 
+            if (_collection == null)
+            {
+                Settings.EventHandles.SendRoleOptions(player);
+                return;
+            }
+
             // 2) Danach frisch aus der DB laden (falls sich z.B. die Rolle über Discord geändert hat)
             var freshData = await _collection.Find(p => p.Id == player.UserId).FirstOrDefaultAsync()
                             ?? await CreatePlayerDataAsync(player);
@@ -679,11 +740,22 @@ namespace NebMainPluginLabApi.Systems.Database
             {
                 ApplyDiscordRole(player, freshData);
             }
+
+            Settings.EventHandles.SendRoleOptions(player);
         }
-        private static void ApplyDiscordRole(Player player, PlayerData data)
+        private static bool ApplyDiscordRole(Player player, PlayerData data)
         {
-            if (data.dcRole == Roles.DiscordRoles.None || !data.dcRoles.Contains(data.dcRole))
-                return;
+            if (player?.ReferenceHub == null || data == null)
+                return false;
+
+            if (data.dcRole == Roles.DiscordRoles.None)
+                return false;
+
+            if (data.dcRoles == null || !data.dcRoles.Contains(data.dcRole))
+            {
+                Logger.Debug($"{data.Nickname} has {data.dcRole} selected but does not own it, skipping.");
+                return false;
+            }
 
             Logger.Debug($"{data.Nickname} has a discord role ({data.dcRole.ToRoleString()}), trying to set it ingame now...");
 
@@ -696,28 +768,29 @@ namespace NebMainPluginLabApi.Systems.Database
 
                 Logger.Debug($"Rank data will be: {rankData.DisplayName}");
 
-                bool isTeam = data.dcRole.ToRoleString() == "Team";
-
                 UserGroup group = new()
                 {
                     Name = rankData.InternalName,
                     BadgeColor = rankData.Color,
                     BadgeText = rankData.DisplayName,
                     Permissions = rankData.Permissions,
-                    Cover = isTeam,
-                    HiddenByDefault = isTeam,
+                    Cover = rankData.Cover,
+                    HiddenByDefault = rankData.Hidden,
                     Shared = false,
                     KickPower = rankData.KickPower,
                     RequiredKickPower = rankData.RequiredKickPower
                 };
 
                 Logger.Debug($"Trying to set rank for {data.Nickname} to {group.Name}");
-                player.UserGroup = group;
-                Logger.Debug($"Rank for {data.Nickname} is now: {player.GroupName}");
+                player.ReferenceHub.serverRoles.SetGroup(group, false, true);
+                Logger.Debug($"Rank for {data.Nickname} is now: {player.GroupName} ({player.ReferenceHub.serverRoles.Network_myColor})");
+
+                return player.GroupName == group.BadgeText;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Error while setting rank for {data.Nickname}: {ex.StackTrace}\n{ex.Data}");
+                Logger.Error($"Error while setting rank for {data.Nickname}: {ex}");
+                return false;
             }
         }
 
@@ -728,6 +801,7 @@ namespace NebMainPluginLabApi.Systems.Database
 
             UpdateDataAsync(ev.Player);
             SessionVariables.Clear(ev.Player);
+            Settings.EventHandles.Forget(ev.Player.UserId);
         }
 
         private static async void OnRoundEnded(RoundEndedEventArgs ev)

@@ -7,11 +7,11 @@ using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Features.Console;
 using NebMainPluginLabApi;
-using NebMainPluginLabApi.Systems.CustomSettings;
 using NebMainPluginLabApi.Systems.Database;
 using NebMainPluginLabApi.Systems.Discord;
 using NebMainPluginLabApi.Systems.Events.ADHSL;
 using NebMainPluginLabApi.Systems.RemoteKeycard;
+using NebMainPluginLabApi.Systems.Settings;
 using NebMainPluginLabApi.Systems.SpawnProtection;
 using NebMainPluginLabApi.Systems.WarteMusik;
 

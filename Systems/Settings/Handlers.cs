@@ -4,10 +4,11 @@ using LabApi.Features.Wrappers;
 using LabApi.Features.Console;
 using LabApi.Features.Extensions;
 using NebMainPluginLabApi.API;
+using NebMainPluginLabApi.API.Enums;
 using PlayerRoles;
 using UserSettings.ServerSpecific;
 
-namespace NebMainPluginLabApi.Systems.CustomSettings
+namespace NebMainPluginLabApi.Systems.Settings
 {
     internal static class Actions
     {
@@ -38,14 +39,52 @@ namespace NebMainPluginLabApi.Systems.CustomSettings
 
         // Potential bug #1: dropdown.Base.SendValueUpdate() might have the wrong filter
         // Potential bug #2: might still simply not work lmfao
+        internal static void RoleSelectMenu(ReferenceHub hub, ServerSpecificSettingBase setting)
+        {
+            try
+            {
+                if (setting is not SSDropdownSetting dropdown) return;
+                if (setting.SettingId != EventHandles.RoleSelectId) return;
+
+                Player p = Player.Get(hub);
+                if (p == null) return;
+
+                if (!EventHandles.TryGetRoleForIndex(p, dropdown.SyncSelectionIndexRaw, out var role))
+                {
+                    HintsAPI.AddHint(p, "Dieser Rang steht dir nicht zur Verfügung.", 3);
+                    return;
+                }
+
+                if (!Systems.Database.Database.SetSelectedRole(p, role))
+                {
+                    if (role != API.Enums.Roles.DiscordRoles.None)
+                        HintsAPI.AddHint(p, "Dein Rang konnte nicht gesetzt werden.", 3);
+
+                    return;
+                }
+
+                HintsAPI.AddHint(p, role == API.Enums.Roles.DiscordRoles.None
+                    ? "Dein Rang wird jetzt nicht mehr angezeigt."
+                    : $"Dein Rang ist jetzt: {role.ToRoleString()}", 3);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Error in Role Select:\n" + e.Message);
+            }
+        }
+
         internal static void ScpSwapMenu(ReferenceHub hub, ServerSpecificSettingBase setting)
         {
             try
             {
                 if (setting is not SSDropdownSetting dropdown) return;
+                if (setting.SettingId != EventHandles.ScpSwapId) return;
 
                 Player p = Player.Get(hub);
                 if (p == null) return;
+
+                if (dropdown.SyncSelectionIndexRaw < 0 || dropdown.SyncSelectionIndexRaw >= Main.Instance.SwapableScps.Count)
+                    return;
 
                 RoleTypeId chosenRole = Main.Instance.SwapableScps[dropdown.SyncSelectionIndexRaw];
 

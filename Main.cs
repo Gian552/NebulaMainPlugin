@@ -137,6 +137,13 @@ namespace NebMainPluginLabApi
             Logger.Info("Disabling WarteMusik...");
             WarteMusik.Disable();
             
+            if (Config.IsAutoFFEnabled == true)
+            {
+                Logger.Info("Disabling  AutoFF...");
+                AutoFF.Disable();
+            }
+            
+            
             Logger.Info("Disabling AFKReplacer");
             Systems.AFKReplacer.EventHandlers.Enable();
 

@@ -95,6 +95,8 @@ namespace NebMainPluginLabApi
                 Logger.Warn("AutoFF is Disabled.");
             }
             
+            Logger.Info("Enabling AFKReplacer");
+            Systems.AFKReplacer.EventHandlers.Enable();
         }
 
         public override void Disable()
@@ -141,6 +143,10 @@ namespace NebMainPluginLabApi
                 AutoFF.Disable();
             }
             
+            
+            Logger.Info("Disabling AFKReplacer");
+            Systems.AFKReplacer.EventHandlers.Enable();
+
             _harmony?.UnpatchAll(HarmonyId);
             _harmony = null;
         }

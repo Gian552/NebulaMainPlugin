@@ -52,3 +52,6 @@ Das offizielle LabAPI-Plugin des **Nebula Development Teams** für SCP: Secret L
 | `tptpost` / `tptp` | Konsole | Team-Spielzeiten-Report manuell posten |
 
 Details, Rechte und Konfigurationsoptionen: siehe [DOCUMENTATION.md](./DOCUMENTATION.md).
+
+## Discord Bot
+[NebulaBot](https://github.com/Gian552/NebulaBot/releases)
